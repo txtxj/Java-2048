@@ -16,16 +16,12 @@ public class Settings
 
 	public Dimension windowSize;
 	public Dimension blockSize;
+	public Dimension titleSize;
 
 	public static class TileStyle {
 		public Color textColor;
 		public Color backgroundColor;
 		public Font textFont;
-
-		public TileStyle(Color textColor, Color backgroundColor) {
-			this.textColor = textColor;
-			this.backgroundColor = backgroundColor;
-		}
 
 		public TileStyle(int textColor, int backgroundColor, int size) {
 			this.textColor = new Color(textColor);
@@ -42,8 +38,9 @@ public class Settings
 
 	// Modify here
 	private void Initiate() {
-		windowSize = new Dimension(500, 500);
-		blockSize = new Dimension(windowSize.width / 4, windowSize.height / 4);
+		blockSize = new Dimension(125, 125);
+		titleSize = new Dimension(500, 50);
+		windowSize = new Dimension(500, 600);
 		palette = new HashMap<>();
 
 		palette.put(2, new TileStyle(0x776e65, 0xeee4da, 54));
