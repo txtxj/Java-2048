@@ -19,33 +19,29 @@ public class GameFrame extends JFrame {
 		this.setDefaultCloseOperation(GameFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
+		this.resizeWithInsets();
+	}
 
-		// Get insets of the windows
-		this.setVisible(true);
+	private void resizeWithInsets() {
+		setVisible(true);
 		Insets insets = this.getInsets();
 		int width = Settings.getInstance().windowSize.width + insets.left + insets.right;
 		int height = Settings.getInstance().windowSize.height + insets.top + insets.bottom;
-		this.setSize(width, height);
+		setSize(width, height);
 	}
 
 	private void createJLabelAtPosition(int num, int x, int y) {
 		int positionX = Settings.getInstance().blockSize.width * y;
 		int positionY = Settings.getInstance().blockSize.height * x;
-		JLabel label = new JLabel("%d".formatted(num), JLabel.CENTER);
-		label.setBounds(positionX, positionY, Settings.getInstance().blockSize.width, Settings.getInstance().blockSize.height);
-		Settings.TileStyle tileStyle = Settings.getInstance().palette.get(num);
-		label.setBackground(tileStyle.backgroundColor);
-		label.setForeground(tileStyle.textColor);
-		label.setFont(tileStyle.textFont);
-		label.setOpaque(true);
-		boardPanel.add(label, tileCounter);
+		Tile tile = new Tile(num, positionX, positionY, Settings.getInstance().blockSize);
+		boardPanel.add(tile, tileCounter);
 		Board.getInstance().dict[x][y] = tileCounter;
 		tileCounter += 1;
 	}
 
 	public void moveJLabelFromTo(int index, int x, int y, AnimationManager.AfterMovingAction acton) {
 		JLabel label = (JLabel) boardPanel.getComponent(index);
-		// TODO: Animation, maybe yield return
+
 	}
 
 	private void drawBoardPanel() {
