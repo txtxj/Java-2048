@@ -21,6 +21,8 @@ public class Tile extends JLabel {
 		this.val = val;
 		Settings.TileStyle style = Settings.getInstance().palette.get(val);
 		this.setText("%d".formatted(val));
+		this.setHorizontalAlignment(Tile.CENTER);
+		this.setVerticalAlignment(Tile.CENTER);
 		this.setFont(style.textFont);
 		this.setBackground(style.backgroundColor);
 		this.setForeground(style.textColor);

@@ -42,7 +42,7 @@ public class Settings
 		blockSize = new Dimension(125, 125);
 		titleSize = new Dimension(500, 10);
 		windowSize = new Dimension(500, 510);
-		titleText = "2048";
+		titleText = "2048 游戏";
 
 		InitiatePalette();
 	}
@@ -57,9 +57,9 @@ public class Settings
 		palette.put(64, new TileStyle(0xf9f6f2, 0xf65e3b, 45));
 		palette.put(128, new TileStyle(0xf9f6f2, 0xedcf72, 45));
 		palette.put(256, new TileStyle(0xf9f6f2, 0xedcc61, 45));
-		palette.put(512, new TileStyle(0xf9f6f2, 0xedc850, 45));
-		palette.put(1024, new TileStyle(0xf9f6f2, 0xedc53f, 35));
-		palette.put(2048, new TileStyle(0xf9f6f2, 0xedc22e, 35));
-		palette.put(4096, new TileStyle(0xf9f6f2, 0x3c3a32, 35));
+		palette.put(512, new TileStyle(0xf9f6f2, 0xedc850, 42));
+		palette.put(1024, new TileStyle(0xf9f6f2, 0xedc53f, 38));
+		palette.put(2048, new TileStyle(0xf9f6f2, 0xedc22e, 36));
+		palette.put(4096, new TileStyle(0xf9f6f2, 0x3c3a32, 36));
 	}
 }

@@ -18,7 +18,7 @@ public class GameFrame extends JFrame {
 		this.setSize(Settings.getInstance().windowSize);
 		this.setDefaultCloseOperation(GameFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
-		this.setResizable(false);
+		//this.setResizable(false);
 		this.resizeWithInsets();
 	}
 
@@ -62,7 +62,7 @@ public class GameFrame extends JFrame {
 	}
 
 	public void createUIComponents() {
-		drawBoardPanel();
 		drawTitle();
+		drawBoardPanel();
 	}
 }
