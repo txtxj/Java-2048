@@ -28,7 +28,7 @@ public class Board {
 		dict[otherX][otherY] = -1;
 		val[sourceX][sourceY] = originVal << 1;
 		val[otherX][otherY] = 0;
-		GUI.Game2048.getInstance().moveJLabelFromTo(preMoveIndex, sourceX, sourceY, AnimationManager.AfterMovingAction.destroy);
+		GUI.Game2048.getInstance().frame.moveJLabelFromTo(preMoveIndex, sourceX, sourceY, AnimationManager.AfterMovingAction.destroy);
 	}
 
 	private void move(int fromX, int fromY, int toX, int toY) {
@@ -36,7 +36,7 @@ public class Board {
 		dict[fromX][fromY] = -1;
 		val[toX][toY] = val[fromX][fromY];
 		val[fromX][fromY] = 0;
-		GUI.Game2048.getInstance().moveJLabelFromTo(dict[toX][toY], toX, toY, AnimationManager.AfterMovingAction.nothing);
+		GUI.Game2048.getInstance().frame.moveJLabelFromTo(dict[toX][toY], toX, toY, AnimationManager.AfterMovingAction.nothing);
 	}
 
 	public void moveLeft() {

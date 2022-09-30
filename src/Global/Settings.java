@@ -17,6 +17,7 @@ public class Settings
 	public Dimension windowSize;
 	public Dimension blockSize;
 	public Dimension titleSize;
+	public String titleText;
 
 	public static class TileStyle {
 		public Color textColor;
@@ -39,10 +40,15 @@ public class Settings
 	// Modify here
 	private void Initiate() {
 		blockSize = new Dimension(125, 125);
-		titleSize = new Dimension(500, 50);
-		windowSize = new Dimension(500, 600);
-		palette = new HashMap<>();
+		titleSize = new Dimension(500, 10);
+		windowSize = new Dimension(500, 510);
+		titleText = "2048";
 
+		InitiatePalette();
+	}
+
+	private void InitiatePalette() {
+		palette = new HashMap<>();
 		palette.put(2, new TileStyle(0x776e65, 0xeee4da, 54));
 		palette.put(4, new TileStyle(0x776e65, 0xede0c8, 54));
 		palette.put(8, new TileStyle(0xf9f6f2, 0xf2b179, 54));
