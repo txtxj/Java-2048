@@ -40,8 +40,8 @@ public class Settings
 	// Modify here
 	private void Initiate() {
 		blockSize = new Dimension(125, 125);
-		titleSize = new Dimension(500, 10);
-		windowSize = new Dimension(500, 510);
+		titleSize = new Dimension(500, 30);
+		windowSize = new Dimension(500, 530);
 		titleText = "2048 游戏";
 
 		InitiatePalette();

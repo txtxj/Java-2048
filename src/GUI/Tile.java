@@ -15,17 +15,17 @@ public class Tile extends JLabel {
 
 	public void setVal(int val) {
 		this.val = val;
-	}
-
-	public Tile(int val, int x, int y, Dimension dimension) {
-		this.val = val;
 		Settings.TileStyle style = Settings.getInstance().palette.get(val);
 		this.setText("%d".formatted(val));
-		this.setHorizontalAlignment(Tile.CENTER);
-		this.setVerticalAlignment(Tile.CENTER);
 		this.setFont(style.textFont);
 		this.setBackground(style.backgroundColor);
 		this.setForeground(style.textColor);
+	}
+
+	public Tile(int val, int x, int y, Dimension dimension) {
+		this.setVal(val);
+		this.setHorizontalAlignment(Tile.CENTER);
+		this.setVerticalAlignment(Tile.CENTER);
 		this.setBounds(x, y, dimension.width, dimension.height);
 		this.setOpaque(true);
 	}

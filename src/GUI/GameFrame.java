@@ -1,6 +1,7 @@
 package GUI;
 
 import Gameplay.Board;
+import Gameplay.KeyboardHandler;
 import Global.Settings;
 
 import javax.swing.*;
@@ -18,8 +19,9 @@ public class GameFrame extends JFrame {
 		this.setSize(Settings.getInstance().windowSize);
 		this.setDefaultCloseOperation(GameFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
-		//this.setResizable(false);
+		this.setResizable(false);
 		this.resizeWithInsets();
+		this.addKeyListener(new KeyboardHandler());
 	}
 
 	private void resizeWithInsets() {
@@ -30,39 +32,53 @@ public class GameFrame extends JFrame {
 		setSize(width, height);
 	}
 
-	private void createJLabelAtPosition(int num, int x, int y) {
+	private void createTileAtPosition(int num, int x, int y) {
 		int positionX = Settings.getInstance().blockSize.width * y;
 		int positionY = Settings.getInstance().blockSize.height * x;
 		Tile tile = new Tile(num, positionX, positionY, Settings.getInstance().blockSize);
 		boardPanel.add(tile, tileCounter);
 		Board.getInstance().dict[x][y] = tileCounter;
+		Board.getInstance().val[x][y] = num;
 		tileCounter += 1;
 	}
 
-	public void moveJLabelFromTo(int index, int x, int y, AnimationManager.AfterMovingAction acton) {
-		JLabel label = (JLabel) boardPanel.getComponent(index);
-
+	public void moveJLabelFromTo(int index, int x, int y, AnimationManager.AfterMovingAction action) {
+		Tile tile = (Tile) boardPanel.getComponent(index);
+		// Todo: display animation
+		int positionX = Settings.getInstance().blockSize.width * y;
+		int positionY = Settings.getInstance().blockSize.height * x;
+		tile.setBounds(positionX, positionY, Settings.getInstance().blockSize.width, Settings.getInstance().blockSize.height);
+		// Todo: destroy unused tile
+		if (action == AnimationManager.AfterMovingAction.destroy) {
+			tile.setVisible(false);
+		}
 	}
 
 	private void drawBoardPanel() {
 		boardPanel = new JPanel();
 		boardPanel.setLayout(null);
 
+		// Test:
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
-				int printNum = Math.min(4096, 1 << (i * 4 + j + 1));
-				createJLabelAtPosition(printNum, i, j);
+				int printNum = Math.min(1024, 1 << (i * 4 + j + 1));
+				createTileAtPosition(printNum, i, j);
 			}
 		}
 	}
 
 	private void drawTitle() {
 		title = new JLabel(Settings.getInstance().titleText);
-		title.setSize(Settings.getInstance().titleSize);
+		title.setPreferredSize(Settings.getInstance().titleSize);
 	}
 
 	public void createUIComponents() {
 		drawTitle();
 		drawBoardPanel();
+	}
+
+	public void updateNumberAt(int index, int number) {
+		Tile tile = (Tile) boardPanel.getComponent(index);
+		tile.setVal(number);
 	}
 }

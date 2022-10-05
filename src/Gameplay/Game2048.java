@@ -1,4 +1,6 @@
-package GUI;
+package Gameplay;
+
+import GUI.GameFrame;
 
 public class Game2048 {
 	private static Game2048 instance;
