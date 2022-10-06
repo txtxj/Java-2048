@@ -7,14 +7,13 @@ import java.awt.*;
 
 public class Tile extends JLabel {
 
-	private int val;
+	private final int index;
 
-	public int getVal() {
-		return this.val;
+	public int getIndex() {
+		return this.index;
 	}
 
 	public void setVal(int val) {
-		this.val = val;
 		Settings.TileStyle style = Settings.getInstance().palette.get(val);
 		this.setText("%d".formatted(val));
 		this.setFont(style.textFont);
@@ -22,11 +21,16 @@ public class Tile extends JLabel {
 		this.setForeground(style.textColor);
 	}
 
-	public Tile(int val, int x, int y, Dimension dimension) {
+	public Tile(int index, int val, int x, int y, Dimension dimension) {
+		this.index = index;
 		this.setVal(val);
 		this.setHorizontalAlignment(Tile.CENTER);
 		this.setVerticalAlignment(Tile.CENTER);
 		this.setBounds(x, y, dimension.width, dimension.height);
 		this.setOpaque(true);
+	}
+
+	public void setBounds(int x, int y, Dimension dimension) {
+		this.setBounds(x, y, dimension.width, dimension.height);
 	}
 }

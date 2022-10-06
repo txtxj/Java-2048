@@ -6,12 +6,14 @@ import Global.Settings;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Stack;
 
 public class GameFrame extends JFrame {
 	private JPanel panel;
 	private JPanel boardPanel;
 	private JLabel title;
 	private int tileCounter = 0;
+	private Stack<Tile> tilePool;
 
 	public GameFrame(String title) {
 		this.setTitle(title);
@@ -35,11 +37,11 @@ public class GameFrame extends JFrame {
 	private void createTileAtPosition(int num, int x, int y) {
 		int positionX = Settings.getInstance().blockSize.width * y;
 		int positionY = Settings.getInstance().blockSize.height * x;
-		Tile tile = new Tile(num, positionX, positionY, Settings.getInstance().blockSize);
-		boardPanel.add(tile, tileCounter);
-		Board.getInstance().dict[x][y] = tileCounter;
+		Tile tile = tilePool.pop();
+		tile.setVal(num);
+		tile.setBounds(positionX, positionY, Settings.getInstance().blockSize);
+		Board.getInstance().dict[x][y] = tile.getIndex();
 		Board.getInstance().val[x][y] = num;
-		tileCounter += 1;
 	}
 
 	public void moveJLabelFromTo(int index, int x, int y, AnimationManager.AfterMovingAction action) {
@@ -51,12 +53,21 @@ public class GameFrame extends JFrame {
 		// Todo: destroy unused tile
 		if (action == AnimationManager.AfterMovingAction.destroy) {
 			tile.setVisible(false);
+			tilePool.push(tile);
 		}
 	}
 
 	private void drawBoardPanel() {
 		boardPanel = new JPanel();
 		boardPanel.setLayout(null);
+		tilePool = new Stack<>();
+
+		for (int i = 0; i < 16; i++) {
+			Tile tile = new Tile(tileCounter, 2, 0, 0, Settings.getInstance().blockSize);
+			boardPanel.add(tile, tileCounter);
+			tileCounter += 1;
+			tilePool.push(tile);
+		}
 
 		// Test:
 		for (int i = 0; i < 4; i++) {
