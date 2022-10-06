@@ -5,9 +5,9 @@ import GUI.GameFrame;
 public class Game2048 {
 	private static Game2048 instance;
 
-	public GameFrame frame;
+	private GameFrame frame;
 
-	public static Game2048 getInstance() {
+	private static Game2048 getInstance() {
 		if (instance == null) {
 			instance = new Game2048();
 		}
@@ -20,6 +20,7 @@ public class Game2048 {
 
 	public static void main(String[] args) {
 		getInstance().frame = new GameFrame("2048");
+		BoardManager.getInstance().frame = getInstance().frame;
 	}
 
 	private void createUIComponents() {

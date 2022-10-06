@@ -1,6 +1,6 @@
 package GUI;
 
-import Gameplay.Board;
+import Gameplay.BoardManager;
 import Gameplay.KeyboardHandler;
 import Global.Settings;
 
@@ -39,9 +39,10 @@ public class GameFrame extends JFrame {
 		int positionY = Settings.getInstance().blockSize.height * x;
 		Tile tile = tilePool.pop();
 		tile.setVal(num);
+		tile.setVisible(true);
 		tile.setBounds(positionX, positionY, Settings.getInstance().blockSize);
-		Board.getInstance().dict[x][y] = tile.getIndex();
-		Board.getInstance().val[x][y] = num;
+		BoardManager.getInstance().dict[x][y] = tile.getIndex();
+		BoardManager.getInstance().val[x][y] = num;
 	}
 
 	public void moveJLabelFromTo(int index, int x, int y, AnimationManager.AfterMovingAction action) {
@@ -49,8 +50,7 @@ public class GameFrame extends JFrame {
 		// Todo: display animation
 		int positionX = Settings.getInstance().blockSize.width * y;
 		int positionY = Settings.getInstance().blockSize.height * x;
-		tile.setBounds(positionX, positionY, Settings.getInstance().blockSize.width, Settings.getInstance().blockSize.height);
-		// Todo: destroy unused tile
+		tile.setBounds(positionX, positionY, Settings.getInstance().blockSize);
 		if (action == AnimationManager.AfterMovingAction.destroy) {
 			tile.setVisible(false);
 			tilePool.push(tile);
@@ -64,18 +64,15 @@ public class GameFrame extends JFrame {
 
 		for (int i = 0; i < 16; i++) {
 			Tile tile = new Tile(tileCounter, 2, 0, 0, Settings.getInstance().blockSize);
+			tile.setVisible(false);
 			boardPanel.add(tile, tileCounter);
 			tileCounter += 1;
 			tilePool.push(tile);
 		}
 
-		// Test:
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
-				int printNum = Math.min(1024, 1 << (i * 4 + j + 1));
-				createTileAtPosition(printNum, i, j);
-			}
-		}
+		randomCreate(2);
+		randomCreate(2);
+		randomCreate(4);
 	}
 
 	private void drawTitle() {
@@ -91,5 +88,28 @@ public class GameFrame extends JFrame {
 	public void updateNumberAt(int index, int number) {
 		Tile tile = (Tile) boardPanel.getComponent(index);
 		tile.setVal(number);
+	}
+
+	public boolean randomCreate(int num) {
+		if (tilePool.empty()) {
+			return false;
+		}
+		int index = (int)(Math.random() * tilePool.size());
+		if (num == 0) {
+			num = ((int)(Math.random() * 2) + 1) << 1;
+		}
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				if (BoardManager.getInstance().dict[i][j] == -1) {
+					if (index == 0) {
+						createTileAtPosition(num, i, j);
+						return true;
+					} else {
+						index -= 1;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }

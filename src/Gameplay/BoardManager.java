@@ -1,26 +1,34 @@
 package Gameplay;
 
 import GUI.AnimationManager;
+import GUI.GameFrame;
 
-public class Board {
+public class BoardManager {
 	public int[][] val;
 	public int[][] dict;
-	public static Board instance;
+	public GameFrame frame;
+	public static BoardManager instance;
 
-	public static Board getInstance() {
+	public static BoardManager getInstance() {
 		if (instance == null) {
-			instance = new Board();
+			instance = new BoardManager();
 		}
 		return instance;
 	}
 
-	public Board() {
+	public BoardManager() {
 		Initiate();
 	}
 
 	private void Initiate() {
 		this.val = new int[4][4];
 		this.dict = new int[4][4];
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				this.val[i][j] = 0;
+				this.dict[i][j] = -1;
+			}
+		}
 	}
 
 	private void merge(int sourceX, int sourceY, int otherX, int otherY, int originVal) {
@@ -28,20 +36,22 @@ public class Board {
 		dict[otherX][otherY] = -1;
 		val[sourceX][sourceY] = originVal << 1;
 		val[otherX][otherY] = 0;
-		Game2048.getInstance().frame.updateNumberAt(dict[sourceX][sourceY], val[sourceX][sourceY]);
-		Game2048.getInstance().frame.moveJLabelFromTo(preMoveIndex, sourceX, sourceY, AnimationManager.AfterMovingAction.destroy);
+		frame.updateNumberAt(dict[sourceX][sourceY], val[sourceX][sourceY]);
+		frame.moveJLabelFromTo(preMoveIndex, sourceX, sourceY, AnimationManager.AfterMovingAction.destroy);
 	}
 
-	private void move(int fromX, int fromY, int toX, int toY) {
-		if (fromX == toX && fromY == toY) return;
+	private boolean move(int fromX, int fromY, int toX, int toY) {
+		if (fromX == toX && fromY == toY) return false;
 		dict[toX][toY] = dict[fromX][fromY];
 		dict[fromX][fromY] = -1;
 		val[toX][toY] = val[fromX][fromY];
 		val[fromX][fromY] = 0;
-		Game2048.getInstance().frame.moveJLabelFromTo(dict[toX][toY], toX, toY, AnimationManager.AfterMovingAction.nothing);
+		frame.moveJLabelFromTo(dict[toX][toY], toX, toY, AnimationManager.AfterMovingAction.nothing);
+		return true;
 	}
 
-	public void moveLeft() {
+	public boolean moveLeft() {
+		boolean flag = false;
 		for (int i = 0; i < 4; i++) {
 			int pre = -1;
 			int index = -1;
@@ -49,16 +59,19 @@ public class Board {
 				if (val[i][j] == pre) {
 					merge(i, index, i, j, val[i][j]);
 					pre = -1;
+					flag = true;
 				} else if (val[i][j] != 0) {
 					pre = val[i][j];
 					index += 1;
-					move(i, j, i, index);
+					flag |= move(i, j, i, index);
 				}
 			}
 		}
+		return flag;
 	}
 
-	public void moveRight() {
+	public boolean moveRight() {
+		boolean flag = false;
 		for (int i = 0; i < 4; i++) {
 			int pre = -1;
 			int index = 4;
@@ -66,16 +79,19 @@ public class Board {
 				if (val[i][j] == pre) {
 					merge(i, index, i, j, val[i][j]);
 					pre = -1;
+					flag = true;
 				} else if (val[i][j] != 0) {
 					pre = val[i][j];
 					index -= 1;
-					move(i, j, i, index);
+					flag |= move(i, j, i, index);
 				}
 			}
 		}
+		return flag;
 	}
 
-	public void moveDown() {
+	public boolean moveDown() {
+		boolean flag = false;
 		for (int j = 0; j < 4; j++) {
 			int pre = -1;
 			int index = 4;
@@ -83,16 +99,19 @@ public class Board {
 				if (val[i][j] == pre) {
 					merge(index, j, i, j, val[i][j]);
 					pre = -1;
+					flag = true;
 				} else if (val[i][j] != 0) {
 					pre = val[i][j];
 					index -= 1;
-					move(i, j, index, j);
+					flag |= move(i, j, index, j);
 				}
 			}
 		}
+		return flag;
 	}
 
-	public void moveUp() {
+	public boolean moveUp() {
+		boolean flag = false;
 		for (int j = 0; j < 4; j++) {
 			int pre = -1;
 			int index = -1;
@@ -100,12 +119,14 @@ public class Board {
 				if (val[i][j] == pre) {
 					merge(index, j, i, j, val[i][j]);
 					pre = -1;
+					flag = true;
 				} else if (val[i][j] != 0) {
 					pre = val[i][j];
 					index += 1;
-					move(i, j, index, j);
+					flag |= move(i, j, index, j);
 				}
 			}
 		}
+		return flag;
 	}
 }
