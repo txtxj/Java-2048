@@ -1,7 +1,8 @@
 package Gameplay;
 
 public class GameManager {
-	public static GameManager instance;
+	private static GameManager instance;
+	public boolean isAnimating;
 
 	public static GameManager getInstance() {
 		if (instance == null) {
@@ -15,10 +16,10 @@ public class GameManager {
 	}
 
 	public void Initiate() {
-
+		isAnimating = false;
 	}
 
 	public void gameOver() {
-
+		isAnimating = false;
 	}
 }

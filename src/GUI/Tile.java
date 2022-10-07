@@ -8,6 +8,7 @@ import java.awt.*;
 public class Tile extends JLabel {
 
 	private final int index;
+	private final GameFrame frame;
 
 	public int getIndex() {
 		return this.index;
@@ -21,7 +22,8 @@ public class Tile extends JLabel {
 		this.setForeground(style.textColor);
 	}
 
-	public Tile(int index, int val, int x, int y, Dimension dimension) {
+	public Tile(GameFrame frame, int index, int val, int x, int y, Dimension dimension) {
+		this.frame = frame;
 		this.index = index;
 		this.setVal(val);
 		this.setHorizontalAlignment(Tile.CENTER);
@@ -32,5 +34,13 @@ public class Tile extends JLabel {
 
 	public void setBounds(int x, int y, Dimension dimension) {
 		this.setBounds(x, y, dimension.width, dimension.height);
+	}
+
+	public void setBounds(int x, int y) {
+		this.setBounds(x, y, getWidth(), getHeight());
+	}
+
+	public void collect() {
+		frame.collect(this);
 	}
 }

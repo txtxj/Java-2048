@@ -18,6 +18,9 @@ public class Settings
 	public Dimension blockSize;
 	public Dimension titleSize;
 	public String titleText;
+	public int animationTotalTime;
+	public int animationSlides;
+	public int animationPeriod;
 
 	public static class TileStyle {
 		public Color textColor;
@@ -43,6 +46,9 @@ public class Settings
 		titleSize = new Dimension(500, 30);
 		windowSize = new Dimension(500, 530);
 		titleText = "2048 游戏";
+		animationTotalTime = 60;
+		animationSlides = 50;
+		animationPeriod = 1;
 
 		InitiatePalette();
 	}

@@ -1,6 +1,5 @@
 package Gameplay;
 
-import GUI.AnimationManager;
 import GUI.GameFrame;
 
 public class BoardManager {
@@ -37,7 +36,7 @@ public class BoardManager {
 		val[sourceX][sourceY] = originVal << 1;
 		val[otherX][otherY] = 0;
 		frame.updateNumberAt(dict[sourceX][sourceY], val[sourceX][sourceY]);
-		frame.moveJLabelFromTo(preMoveIndex, sourceX, sourceY, AnimationManager.AfterMovingAction.destroy);
+		frame.moveJLabelFromTo(preMoveIndex, sourceX, sourceY, true);
 	}
 
 	private boolean move(int fromX, int fromY, int toX, int toY) {
@@ -46,7 +45,7 @@ public class BoardManager {
 		dict[fromX][fromY] = -1;
 		val[toX][toY] = val[fromX][fromY];
 		val[fromX][fromY] = 0;
-		frame.moveJLabelFromTo(dict[toX][toY], toX, toY, AnimationManager.AfterMovingAction.nothing);
+		frame.moveJLabelFromTo(dict[toX][toY], toX, toY, false);
 		return true;
 	}
 

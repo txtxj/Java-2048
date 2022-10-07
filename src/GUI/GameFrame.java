@@ -7,6 +7,7 @@ import Global.Settings;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Stack;
+import java.util.Timer;
 
 public class GameFrame extends JFrame {
 	private JPanel panel;
@@ -14,6 +15,7 @@ public class GameFrame extends JFrame {
 	private JLabel title;
 	private int tileCounter = 0;
 	private Stack<Tile> tilePool;
+	private final Timer timer;
 
 	public GameFrame(String title) {
 		this.setTitle(title);
@@ -24,6 +26,7 @@ public class GameFrame extends JFrame {
 		this.setResizable(false);
 		this.resizeWithInsets();
 		this.addKeyListener(new KeyboardHandler());
+		this.timer = new Timer();
 	}
 
 	private void resizeWithInsets() {
@@ -45,16 +48,12 @@ public class GameFrame extends JFrame {
 		BoardManager.getInstance().val[x][y] = num;
 	}
 
-	public void moveJLabelFromTo(int index, int x, int y, AnimationManager.AfterMovingAction action) {
+	public void moveJLabelFromTo(int index, int x, int y, boolean destroy) {
 		Tile tile = (Tile) boardPanel.getComponent(index);
-		// Todo: display animation
 		int positionX = Settings.getInstance().blockSize.width * y;
 		int positionY = Settings.getInstance().blockSize.height * x;
-		tile.setBounds(positionX, positionY, Settings.getInstance().blockSize);
-		if (action == AnimationManager.AfterMovingAction.destroy) {
-			tile.setVisible(false);
-			tilePool.push(tile);
-		}
+		Rebounder rebounder = new Rebounder(tile, positionX, positionY, Settings.getInstance().animationSlides, destroy);
+		timer.schedule(rebounder, 0, Settings.getInstance().animationPeriod);
 	}
 
 	private void drawBoardPanel() {
@@ -63,7 +62,7 @@ public class GameFrame extends JFrame {
 		tilePool = new Stack<>();
 
 		for (int i = 0; i < 16; i++) {
-			Tile tile = new Tile(tileCounter, 2, 0, 0, Settings.getInstance().blockSize);
+			Tile tile = new Tile(this, tileCounter, 2, 0, 0, Settings.getInstance().blockSize);
 			tile.setVisible(false);
 			boardPanel.add(tile, tileCounter);
 			tileCounter += 1;
@@ -90,10 +89,7 @@ public class GameFrame extends JFrame {
 		tile.setVal(number);
 	}
 
-	public boolean randomCreate(int num) {
-		if (tilePool.empty()) {
-			return false;
-		}
+	public void randomCreate(int num) {
 		int index = (int)(Math.random() * tilePool.size());
 		if (num == 0) {
 			num = ((int)(Math.random() * 2) + 1) << 1;
@@ -103,17 +99,21 @@ public class GameFrame extends JFrame {
 				if (BoardManager.getInstance().dict[i][j] == -1) {
 					if (index == 0) {
 						createTileAtPosition(num, i, j);
-						return true;
+						return;
 					} else {
 						index -= 1;
 					}
 				}
 			}
 		}
-		return false;
 	}
 
 	public boolean isPoolEmpty() {
 		return tilePool.empty();
+	}
+
+	public void collect(Tile tile) {
+		tile.setVisible(false);
+		tilePool.push(tile);
 	}
 }
