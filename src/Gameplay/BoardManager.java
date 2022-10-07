@@ -129,4 +129,18 @@ public class BoardManager {
 		}
 		return flag;
 	}
+
+	public boolean isOver() {
+		if (!frame.isPoolEmpty()) {
+			return false;
+		}
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				if ((i != 3 && val[i][j] == val[i + 1][j]) || (j != 3 && val[i][j] == val[i][j + 1])) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 }

@@ -112,4 +112,8 @@ public class GameFrame extends JFrame {
 		}
 		return false;
 	}
+
+	public boolean isPoolEmpty() {
+		return tilePool.empty();
+	}
 }

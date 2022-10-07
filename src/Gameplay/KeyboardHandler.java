@@ -15,7 +15,11 @@ public class KeyboardHandler implements KeyListener {
 			default -> false;
 		}) {
 			BoardManager.getInstance().frame.randomCreate(0);
+			if (BoardManager.getInstance().isOver()) {
+				GameManager.getInstance().gameOver();
+			}
 		}
+
 	}
 
 	@Override
