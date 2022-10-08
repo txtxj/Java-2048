@@ -10,7 +10,7 @@ import java.util.TimerTask;
 public class KeyboardHandler implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (!GameManager.getInstance().isAnimating && switch (e.getKeyCode()) {
+		if (!GameManager.getInstance().isGameOver && !GameManager.getInstance().isAnimating && switch (e.getKeyCode()) {
 			case KeyEvent.VK_LEFT -> BoardManager.getInstance().moveLeft();
 			case KeyEvent.VK_RIGHT -> BoardManager.getInstance().moveRight();
 			case KeyEvent.VK_UP -> BoardManager.getInstance().moveUp();

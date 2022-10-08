@@ -7,11 +7,14 @@ import java.awt.*;
 
 public class Tile extends JLabel {
 
-	private final int index;
+	private int index;
 	private final GameFrame frame;
 
 	public int getIndex() {
 		return this.index;
+	}
+	public void setIndex(int val) {
+		this.index = val;
 	}
 
 	public void setVal(int val) {

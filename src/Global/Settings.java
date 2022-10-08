@@ -46,7 +46,7 @@ public class Settings
 		titleSize = new Dimension(500, 30);
 		windowSize = new Dimension(500, 530);
 		titleText = "2048 游戏";
-		animationTotalTime = 60;
+		animationTotalTime = 75;
 		animationSlides = 50;
 		animationPeriod = 1;
 

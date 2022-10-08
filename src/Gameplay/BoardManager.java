@@ -32,6 +32,13 @@ public class BoardManager {
 
 	private void merge(int sourceX, int sourceY, int otherX, int otherY, int originVal) {
 		int preMoveIndex = dict[otherX][otherY];
+		int targetIndex = dict[sourceX][sourceY];
+		if (preMoveIndex < targetIndex) {
+			frame.swapTiles(preMoveIndex, targetIndex);
+			dict[otherX][otherY] = targetIndex;
+			dict[sourceX][sourceY] = preMoveIndex;
+			preMoveIndex = targetIndex;
+		}
 		dict[otherX][otherY] = -1;
 		val[sourceX][sourceY] = originVal << 1;
 		val[otherX][otherY] = 0;

@@ -90,6 +90,9 @@ public class GameFrame extends JFrame {
 	}
 
 	public void randomCreate(int num) {
+		if (tilePool.empty()) {
+			return;
+		}
 		int index = (int)(Math.random() * tilePool.size());
 		if (num == 0) {
 			num = ((int)(Math.random() * 2) + 1) << 1;
@@ -115,5 +118,14 @@ public class GameFrame extends JFrame {
 	public void collect(Tile tile) {
 		tile.setVisible(false);
 		tilePool.push(tile);
+	}
+
+	public void swapTiles(int a, int b) {
+		Tile first = (Tile) boardPanel.getComponent(a);
+		Tile second = (Tile) boardPanel.getComponent(b);
+		first.setIndex(b);
+		second.setIndex(a);
+		boardPanel.setComponentZOrder(first, b);
+		boardPanel.setComponentZOrder(second, a);
 	}
 }
