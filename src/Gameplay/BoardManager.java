@@ -137,16 +137,25 @@ public class BoardManager {
 	}
 
 	public boolean isOver() {
-		if (!frame.isPoolEmpty()) {
-			return false;
-		}
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
-				if ((i != 3 && val[i][j] == val[i + 1][j]) || (j != 3 && val[i][j] == val[i][j + 1])) {
+				if (val[i][j] == 0 || (i != 3 && val[i][j] == val[i + 1][j]) || (j != 3 && val[i][j] == val[i][j + 1])) {
 					return false;
 				}
 			}
 		}
 		return true;
+	}
+
+	public int calculateSpace() {
+		int cnt = 0;
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				if (val[i][j] == 0) {
+					cnt += 1;
+				}
+			}
+		}
+		return cnt;
 	}
 }

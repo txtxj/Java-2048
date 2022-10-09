@@ -62,7 +62,7 @@ public class GameFrame extends JFrame {
 		boardPanel.setLayout(null);
 		tilePool = new Stack<>();
 
-		for (int i = 0; i < 16; i++) {
+		for (int i = 0; i < 24; i++) {
 			Tile tile = new Tile(this, tileCounter, 2, 0, 0, Settings.getInstance().blockSize);
 			tile.setVisible(false);
 			boardPanel.add(tile, tileCounter);
@@ -88,7 +88,7 @@ public class GameFrame extends JFrame {
 		if (tilePool.empty()) {
 			return;
 		}
-		int index = (int)(Math.random() * tilePool.size());
+		int index = (int)(Math.random() * BoardManager.getInstance().calculateSpace());
 		if (num == 0) {
 			num = ((int)(Math.random() * 2) + 1) << 1;
 		}
@@ -104,10 +104,6 @@ public class GameFrame extends JFrame {
 				}
 			}
 		}
-	}
-
-	public boolean isPoolEmpty() {
-		return tilePool.empty();
 	}
 
 	public void collect(Tile tile) {

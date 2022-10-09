@@ -44,7 +44,7 @@ public class Settings
 	// Modify here
 	private void Initiate() {
 		blockSize = new Int2(125, 125);
-		padding = new Int2(30, 30);
+		padding = new Int2(10, 10);
 		windowSize = blockSize.mul(4).add(padding.mul(2));
 		titleText = "2048 游戏";
 		animationTotalTime = 75;

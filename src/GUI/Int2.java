@@ -11,16 +11,10 @@ public class Int2 implements java.io.Serializable, Cloneable {
 	@Serial
 	private static final long serialVersionUID = 4723952579491349524L;
 
-	public Int2() {}
 
 	public Int2(int x, int y) {
 		this.x = x;
 		this.y = y;
-	}
-
-	public Int2(Dimension d) {
-		this.x = d.width;
-		this.y = d.height;
 	}
 
 	public Dimension getD() {
