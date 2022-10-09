@@ -1,19 +1,8 @@
 package Gameplay;
 
-import GUI.GameFrame;
-
 public class BoardManager {
 	public int[][] val;
 	public int[][] dict;
-	public GameFrame frame;
-	public static BoardManager instance;
-
-	public static BoardManager getInstance() {
-		if (instance == null) {
-			instance = new BoardManager();
-		}
-		return instance;
-	}
 
 	public BoardManager() {
 		Initiate();
@@ -34,7 +23,7 @@ public class BoardManager {
 		int preMoveIndex = dict[otherX][otherY];
 		int targetIndex = dict[sourceX][sourceY];
 		if (preMoveIndex < targetIndex) {
-			frame.swapTiles(preMoveIndex, targetIndex);
+			GameManager.getInstance().gameFrame.swapTiles(preMoveIndex, targetIndex);
 			dict[otherX][otherY] = targetIndex;
 			dict[sourceX][sourceY] = preMoveIndex;
 			preMoveIndex = targetIndex;
@@ -42,8 +31,8 @@ public class BoardManager {
 		dict[otherX][otherY] = -1;
 		val[sourceX][sourceY] = originVal << 1;
 		val[otherX][otherY] = 0;
-		frame.updateNumberAt(dict[sourceX][sourceY], val[sourceX][sourceY]);
-		frame.moveJLabelFromTo(preMoveIndex, sourceX, sourceY, true);
+		GameManager.getInstance().gameFrame.updateNumberAt(dict[sourceX][sourceY], val[sourceX][sourceY]);
+		GameManager.getInstance().gameFrame.moveJLabelFromTo(preMoveIndex, sourceX, sourceY, true);
 	}
 
 	private boolean move(int fromX, int fromY, int toX, int toY) {
@@ -52,7 +41,7 @@ public class BoardManager {
 		dict[fromX][fromY] = -1;
 		val[toX][toY] = val[fromX][fromY];
 		val[fromX][fromY] = 0;
-		frame.moveJLabelFromTo(dict[toX][toY], toX, toY, false);
+		GameManager.getInstance().gameFrame.moveJLabelFromTo(dict[toX][toY], toX, toY, false);
 		return true;
 	}
 

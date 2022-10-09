@@ -1,19 +1,19 @@
 package GUI;
 
-import Gameplay.BoardManager;
+import Gameplay.GameManager;
 import Gameplay.KeyboardHandler;
 import Global.Settings;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Stack;
+import java.util.LinkedList;
 import java.util.Timer;
 
 public class GameFrame extends JFrame {
 	private JPanel panel;
 	private JPanel boardPanel;
 	private int tileCounter = 0;
-	private Stack<Tile> tilePool;
+	private LinkedList<Tile> tilePool;
 	private final Timer timer;
 
 	public GameFrame(String title) {
@@ -46,8 +46,8 @@ public class GameFrame extends JFrame {
 		tile.setVal(num);
 		tile.setVisible(true);
 		tile.setBounds(pos.x, pos.y, Settings.getInstance().blockSize.getD());
-		BoardManager.getInstance().dict[x][y] = tile.getIndex();
-		BoardManager.getInstance().val[x][y] = num;
+		GameManager.getInstance().boardManager.dict[x][y] = tile.getIndex();
+		GameManager.getInstance().boardManager.val[x][y] = num;
 	}
 
 	public void moveJLabelFromTo(int index, int x, int y, boolean destroy) {
@@ -60,7 +60,7 @@ public class GameFrame extends JFrame {
 	private void drawBoardPanel() {
 		boardPanel = new JPanel();
 		boardPanel.setLayout(null);
-		tilePool = new Stack<>();
+		tilePool = new LinkedList<>();
 
 		for (int i = 0; i < 24; i++) {
 			Tile tile = new Tile(this, tileCounter, 2, 0, 0, Settings.getInstance().blockSize);
@@ -85,16 +85,16 @@ public class GameFrame extends JFrame {
 	}
 
 	public void randomCreate(int num) {
-		if (tilePool.empty()) {
+		if (tilePool.size() == 0) {
 			return;
 		}
-		int index = (int)(Math.random() * BoardManager.getInstance().calculateSpace());
+		int index = (int)(Math.random() * GameManager.getInstance().boardManager.calculateSpace());
 		if (num == 0) {
 			num = ((int)(Math.random() * 2) + 1) << 1;
 		}
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
-				if (BoardManager.getInstance().dict[i][j] == -1) {
+				if (GameManager.getInstance().boardManager.dict[i][j] == -1) {
 					if (index == 0) {
 						createTileAtPosition(num, i, j);
 						return;

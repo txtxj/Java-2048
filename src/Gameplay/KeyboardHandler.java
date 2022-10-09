@@ -11,10 +11,10 @@ public class KeyboardHandler implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (!GameManager.getInstance().isGameOver && !GameManager.getInstance().isAnimating && switch (e.getKeyCode()) {
-			case KeyEvent.VK_LEFT -> BoardManager.getInstance().moveLeft();
-			case KeyEvent.VK_RIGHT -> BoardManager.getInstance().moveRight();
-			case KeyEvent.VK_UP -> BoardManager.getInstance().moveUp();
-			case KeyEvent.VK_DOWN -> BoardManager.getInstance().moveDown();
+			case KeyEvent.VK_LEFT -> GameManager.getInstance().boardManager.moveLeft();
+			case KeyEvent.VK_RIGHT -> GameManager.getInstance().boardManager.moveRight();
+			case KeyEvent.VK_UP -> GameManager.getInstance().boardManager.moveUp();
+			case KeyEvent.VK_DOWN -> GameManager.getInstance().boardManager.moveDown();
 			default -> false;
 		}) {
 			Timer timer = new Timer();
@@ -22,8 +22,8 @@ public class KeyboardHandler implements KeyListener {
 				@Override
 				public void run() {
 					GameManager.getInstance().isAnimating = false;
-					BoardManager.getInstance().frame.randomCreate(0);
-					if (BoardManager.getInstance().isOver()) {
+					GameManager.getInstance().gameFrame.randomCreate(0);
+					if (GameManager.getInstance().boardManager.isOver()) {
 						GameManager.getInstance().gameOver();
 					}
 				}
