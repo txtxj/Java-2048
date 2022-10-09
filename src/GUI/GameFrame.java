@@ -12,7 +12,6 @@ import java.util.Timer;
 public class GameFrame extends JFrame {
 	private JPanel panel;
 	private JPanel boardPanel;
-	private JLabel title;
 	private int tileCounter = 0;
 	private Stack<Tile> tilePool;
 	private final Timer timer;
@@ -20,7 +19,7 @@ public class GameFrame extends JFrame {
 	public GameFrame(String title) {
 		this.setTitle(title);
 		this.setContentPane(panel);
-		this.setSize(Settings.getInstance().windowSize);
+		this.setSize(Settings.getInstance().windowSize.getD());
 		this.setDefaultCloseOperation(GameFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
@@ -29,30 +28,32 @@ public class GameFrame extends JFrame {
 		this.timer = new Timer();
 	}
 
+	private Int2 calculateTilePosition(Int2 index) {
+		return Settings.getInstance().blockSize.mul(index.swap()).add(Settings.getInstance().padding);
+	}
+
 	private void resizeWithInsets() {
 		setVisible(true);
 		Insets insets = this.getInsets();
-		int width = Settings.getInstance().windowSize.width + insets.left + insets.right;
-		int height = Settings.getInstance().windowSize.height + insets.top + insets.bottom;
+		int width = Settings.getInstance().windowSize.x + insets.left + insets.right;
+		int height = Settings.getInstance().windowSize.y + insets.top + insets.bottom;
 		setSize(width, height);
 	}
 
 	private void createTileAtPosition(int num, int x, int y) {
-		int positionX = Settings.getInstance().blockSize.width * y;
-		int positionY = Settings.getInstance().blockSize.height * x;
+		Int2 pos = calculateTilePosition(new Int2(x, y));
 		Tile tile = tilePool.pop();
 		tile.setVal(num);
 		tile.setVisible(true);
-		tile.setBounds(positionX, positionY, Settings.getInstance().blockSize);
+		tile.setBounds(pos.x, pos.y, Settings.getInstance().blockSize.getD());
 		BoardManager.getInstance().dict[x][y] = tile.getIndex();
 		BoardManager.getInstance().val[x][y] = num;
 	}
 
 	public void moveJLabelFromTo(int index, int x, int y, boolean destroy) {
 		Tile tile = (Tile) boardPanel.getComponent(index);
-		int positionX = Settings.getInstance().blockSize.width * y;
-		int positionY = Settings.getInstance().blockSize.height * x;
-		Rebounder rebounder = new Rebounder(tile, positionX, positionY, Settings.getInstance().animationSlides, destroy);
+		Int2 pos = calculateTilePosition(new Int2(x, y));
+		Rebounder rebounder = new Rebounder(tile, pos.x, pos.y, Settings.getInstance().animationSlides, destroy);
 		timer.schedule(rebounder, 0, Settings.getInstance().animationPeriod);
 	}
 
@@ -74,13 +75,7 @@ public class GameFrame extends JFrame {
 		randomCreate(4);
 	}
 
-	private void drawTitle() {
-		title = new JLabel(Settings.getInstance().titleText);
-		title.setPreferredSize(Settings.getInstance().titleSize);
-	}
-
 	public void createUIComponents() {
-		drawTitle();
 		drawBoardPanel();
 	}
 

@@ -35,6 +35,16 @@ public class Tile extends JLabel {
 		this.setOpaque(true);
 	}
 
+	public Tile(GameFrame frame, int index, int val, int x, int y, Int2 dimension) {
+		this.frame = frame;
+		this.index = index;
+		this.setVal(val);
+		this.setHorizontalAlignment(Tile.CENTER);
+		this.setVerticalAlignment(Tile.CENTER);
+		this.setBounds(x, y, dimension.x, dimension.y);
+		this.setOpaque(true);
+	}
+
 	public void setBounds(int x, int y, Dimension dimension) {
 		this.setBounds(x, y, dimension.width, dimension.height);
 	}

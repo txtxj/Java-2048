@@ -2,6 +2,7 @@ package Global;
 
 import java.awt.*;
 import java.util.HashMap;
+import GUI.Int2;
 
 public class Settings
 {
@@ -14,9 +15,9 @@ public class Settings
 		return instance;
 	}
 
-	public Dimension windowSize;
-	public Dimension blockSize;
-	public Dimension titleSize;
+	public Int2 windowSize;
+	public Int2 blockSize;
+	public Int2 padding;
 	public String titleText;
 	public int animationTotalTime;
 	public int animationSlides;
@@ -42,9 +43,9 @@ public class Settings
 
 	// Modify here
 	private void Initiate() {
-		blockSize = new Dimension(125, 125);
-		titleSize = new Dimension(500, 30);
-		windowSize = new Dimension(500, 530);
+		blockSize = new Int2(125, 125);
+		padding = new Int2(30, 30);
+		windowSize = blockSize.mul(4).add(padding.mul(2));
 		titleText = "2048 游戏";
 		animationTotalTime = 75;
 		animationSlides = 50;

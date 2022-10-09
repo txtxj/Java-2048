@@ -12,14 +12,6 @@
     </clientProperties>
     <border type="none"/>
     <children>
-      <component id="ba825" class="javax.swing.JLabel" binding="title" custom-create="true">
-        <constraints border-constraint="North"/>
-        <properties>
-          <horizontalAlignment value="0"/>
-          <horizontalTextPosition value="0"/>
-          <text value="2048"/>
-        </properties>
-      </component>
       <grid id="7e69e" binding="boardPanel" custom-create="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints border-constraint="Center"/>
