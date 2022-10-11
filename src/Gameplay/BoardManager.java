@@ -56,7 +56,7 @@ public class BoardManager {
 					pre = -1;
 					flag = true;
 				} else if (val[i][j] != 0) {
-					pre = val[i][j];
+					pre = val[i][j] == 4096 ? -1 : val[i][j];
 					index += 1;
 					flag |= move(i, j, i, index);
 				}
@@ -76,7 +76,7 @@ public class BoardManager {
 					pre = -1;
 					flag = true;
 				} else if (val[i][j] != 0) {
-					pre = val[i][j];
+					pre = val[i][j] == 4096 ? -1 : val[i][j];
 					index -= 1;
 					flag |= move(i, j, i, index);
 				}
@@ -96,7 +96,7 @@ public class BoardManager {
 					pre = -1;
 					flag = true;
 				} else if (val[i][j] != 0) {
-					pre = val[i][j];
+					pre = val[i][j] == 4096 ? -1 : val[i][j];
 					index -= 1;
 					flag |= move(i, j, index, j);
 				}
@@ -116,7 +116,7 @@ public class BoardManager {
 					pre = -1;
 					flag = true;
 				} else if (val[i][j] != 0) {
-					pre = val[i][j];
+					pre = val[i][j] == 4096 ? -1 : val[i][j];
 					index += 1;
 					flag |= move(i, j, index, j);
 				}
