@@ -22,7 +22,7 @@ public class KeyboardHandler implements KeyListener {
 				@Override
 				public void run() {
 					GameManager.getInstance().isAnimating = false;
-					GameManager.getInstance().gameFrame.randomCreate(0);
+					GameManager.getInstance().gameFrame.getBoard().randomCreate(0);
 					if (GameManager.getInstance().boardManager.isOver()) {
 						GameManager.getInstance().gameOver();
 					}

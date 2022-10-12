@@ -3,12 +3,11 @@ package GUI;
 import javax.swing.*;
 import Global.Settings;
 
-import java.awt.*;
 
 public class Tile extends JLabel {
 
 	private int index;
-	private final GameFrame frame;
+	private final BoardPanel board;
 
 	public int getIndex() {
 		return this.index;
@@ -25,18 +24,8 @@ public class Tile extends JLabel {
 		this.setForeground(style.textColor);
 	}
 
-	public Tile(GameFrame frame, int index, int val, int x, int y, Dimension dimension) {
-		this.frame = frame;
-		this.index = index;
-		this.setVal(val);
-		this.setHorizontalAlignment(Tile.CENTER);
-		this.setVerticalAlignment(Tile.CENTER);
-		this.setBounds(x, y, dimension.width, dimension.height);
-		this.setOpaque(true);
-	}
-
-	public Tile(GameFrame frame, int index, int val, int x, int y, Int2 dimension) {
-		this.frame = frame;
+	public Tile(BoardPanel board, int index, int val, int x, int y, Int2 dimension) {
+		this.board = board;
 		this.index = index;
 		this.setVal(val);
 		this.setHorizontalAlignment(Tile.CENTER);
@@ -45,15 +34,15 @@ public class Tile extends JLabel {
 		this.setOpaque(true);
 	}
 
-	public void setBounds(int x, int y, Dimension dimension) {
-		this.setBounds(x, y, dimension.width, dimension.height);
+	public void setBounds(int x, int y, Int2 size) {
+		super.setBounds(x, y, size.x, size.y);
 	}
 
 	public void setBounds(int x, int y) {
-		this.setBounds(x, y, getWidth(), getHeight());
+		super.setBounds(x, y, getWidth(), getHeight());
 	}
 
 	public void collect() {
-		frame.collect(this);
+		board.collect(this);
 	}
 }
