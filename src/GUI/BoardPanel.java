@@ -48,7 +48,7 @@ public class BoardPanel extends JPanel {
 			tile.setVisible(false);
 			add(tile, tileCounter);
 			tileCounter += 1;
-			tilePool.push(tile);
+			tilePool.offer(tile);
 		}
 
 		randomCreate(2);
@@ -80,7 +80,7 @@ public class BoardPanel extends JPanel {
 
 	public void collect(Tile tile) {
 		tile.setVisible(false);
-		tilePool.push(tile);
+		tilePool.offer(tile);
 	}
 
 	public void updateNumberAt(int index, int number) {

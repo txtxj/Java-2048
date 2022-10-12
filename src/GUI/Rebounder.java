@@ -28,15 +28,17 @@ public class Rebounder extends TimerTask {
 
 	@Override
 	public void run() {
-		int nowX = (counter * targetX + (slice - counter) * origX) / slice;
-		int nowY = (counter * targetY + (slice - counter) * origY) / slice;
-		tile.setBounds(nowX, nowY);
-		if (counter == slice) {
-			if (destroy) {
-				tile.collect();
+		synchronized (tile) {
+			int nowX = (counter * targetX + (slice - counter) * origX) / slice;
+			int nowY = (counter * targetY + (slice - counter) * origY) / slice;
+			tile.setBounds(nowX, nowY);
+			if (counter == slice) {
+				if (destroy) {
+					tile.collect();
+				}
+				cancel();
 			}
-			cancel();
+			counter += 1;
 		}
-		counter += 1;
 	}
 }
