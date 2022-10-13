@@ -33,6 +33,7 @@ public class BoardManager {
 		val[otherX][otherY] = 0;
 		GameManager.getInstance().gameFrame.getBoard().updateNumberAt(dict[sourceX][sourceY], val[sourceX][sourceY]);
 		GameManager.getInstance().gameFrame.getBoard().moveJLabelFromTo(preMoveIndex, sourceX, sourceY, true);
+		GameManager.getInstance().rankManager.earnScore(val[sourceX][sourceY]);
 	}
 
 	private boolean move(int fromX, int fromY, int toX, int toY) {
@@ -146,5 +147,14 @@ public class BoardManager {
 			}
 		}
 		return cnt;
+	}
+
+	public void resetGame() {
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				this.val[i][j] = 0;
+				this.dict[i][j] = -1;
+			}
+		}
 	}
 }

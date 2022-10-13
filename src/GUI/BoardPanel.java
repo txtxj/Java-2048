@@ -87,4 +87,19 @@ public class BoardPanel extends JPanel {
 		Tile tile = (Tile) getComponent(index);
 		tile.setVal(number);
 	}
+
+	public void resetGame() {
+
+		tilePool.clear();
+
+		for (int i = 0; i < 24; i++) {
+			Tile tile = (Tile) getComponent(i);
+			tile.setVisible(false);
+			tilePool.offer(tile);
+		}
+
+		randomCreate(2);
+		randomCreate(2);
+		randomCreate(4);
+	}
 }

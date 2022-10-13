@@ -35,6 +35,9 @@ public class KeyboardHandler implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_R) {
+			GameManager.getInstance().resetGame();
+		}
 	}
 
 	@Override
