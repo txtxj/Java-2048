@@ -13,6 +13,7 @@ public class GameFrame extends JFrame {
 	public GameFrame(String title) {
 		this.setTitle(title);
 		this.setContentPane(panel);
+		this.panel.setLayout(null);
 		this.setSize(Settings.getInstance().windowSize.getD());
 		this.setDefaultCloseOperation(GameFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);

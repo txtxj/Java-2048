@@ -18,7 +18,7 @@ public class BoardPanel extends JPanel {
 	}
 
 	private Int2 calculateTilePosition(Int2 index) {
-		return Settings.getInstance().blockSize.mul(index.swap()).add(Settings.getInstance().padding);
+		return Settings.getInstance().blockSize.mul(index.swap());
 	}
 
 	private void createTileAtPosition(int num, int x, int y) {
@@ -32,7 +32,7 @@ public class BoardPanel extends JPanel {
 	}
 
 	public void moveJLabelFromTo(int index, int x, int y, boolean destroy) {
-		Tile tile = (Tile) getComponent(index);
+		Tile tile = getTile(index);
 		Int2 pos = calculateTilePosition(new Int2(x, y));
 		Rebounder rebounder = new Rebounder(tile, pos.x, pos.y, Settings.getInstance().animationSlides, destroy);
 		timer.schedule(rebounder, 0, Settings.getInstance().animationPeriod);
@@ -41,6 +41,8 @@ public class BoardPanel extends JPanel {
 	private void Initiate() {
 		this.timer = new Timer();
 		this.setLayout(null);
+		this.setBounds(Settings.getInstance().padding.x, Settings.getInstance().padding.y,
+				Settings.getInstance().blockSize.x * 4, Settings.getInstance().blockSize.y * 4);
 		this.tilePool = new LinkedList<>();
 
 		for (int i = 0; i < 24; i++) {
@@ -83,17 +85,20 @@ public class BoardPanel extends JPanel {
 		tilePool.offer(tile);
 	}
 
+	public Tile getTile(int index) {
+		return (Tile) getComponent(index);
+	}
+
 	public void updateNumberAt(int index, int number) {
-		Tile tile = (Tile) getComponent(index);
+		Tile tile = getTile(index);
 		tile.setVal(number);
 	}
 
 	public void resetGame() {
-
 		tilePool.clear();
 
 		for (int i = 0; i < 24; i++) {
-			Tile tile = (Tile) getComponent(i);
+			Tile tile = getTile(i);
 			tile.setVisible(false);
 			tilePool.offer(tile);
 		}

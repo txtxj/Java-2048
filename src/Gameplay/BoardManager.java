@@ -11,12 +11,7 @@ public class BoardManager {
 	private void Initiate() {
 		this.val = new int[4][4];
 		this.dict = new int[4][4];
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
-				this.val[i][j] = 0;
-				this.dict[i][j] = -1;
-			}
-		}
+		this.resetGame();
 	}
 
 	private void merge(int sourceX, int sourceY, int otherX, int otherY, int originVal) {

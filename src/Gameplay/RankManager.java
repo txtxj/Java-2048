@@ -6,11 +6,15 @@ import java.util.List;
 public class RankManager {
 	public static class RankItem implements Comparable<RankItem> {
 		public int score;
+		public int loginTime;
 		public String name;
 
 		@Override
 		public int compareTo(RankItem o) {
-			return this.score - o.score;
+			if (this.score == o.score) {
+				return this.loginTime - o.loginTime;
+			}
+			return o.score - this.score;
 		}
 	}
 
