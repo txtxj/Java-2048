@@ -9,6 +9,7 @@ import java.awt.*;
 public class GameFrame extends JFrame {
 	private JPanel panel;
 	public JPanel boardPanel;
+	private JPanel leaderBoard;
 
 	public GameFrame(String title) {
 		this.setTitle(title);
@@ -34,8 +35,13 @@ public class GameFrame extends JFrame {
 		boardPanel = new BoardPanel();
 	}
 
+	private void drawLeaderBoard() {
+		leaderBoard = new RankingPanel();
+	}
+
 	public void createUIComponents() {
 		drawBoardPanel();
+		drawLeaderBoard();
 	}
 
 	public BoardPanel getBoard() {

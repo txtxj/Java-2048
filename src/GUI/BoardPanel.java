@@ -14,7 +14,7 @@ public class BoardPanel extends JPanel {
 	private Timer timer;
 
 	public BoardPanel() {
-		Initiate();
+		this.Initiate();
 	}
 
 	private Int2 calculateTilePosition(Int2 index) {
@@ -43,6 +43,7 @@ public class BoardPanel extends JPanel {
 		this.setLayout(null);
 		this.setBounds(Settings.getInstance().padding.x, Settings.getInstance().padding.y,
 				Settings.getInstance().blockSize.x * 4, Settings.getInstance().blockSize.y * 4);
+		this.setBackground(Settings.getInstance().frameBackgroundColor);
 		this.tilePool = new LinkedList<>();
 
 		for (int i = 0; i < 24; i++) {

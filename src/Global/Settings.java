@@ -18,10 +18,14 @@ public class Settings
 	public Int2 windowSize;
 	public Int2 blockSize;
 	public Int2 padding;
+	public Int2 rankSize;
 	public String titleText;
 	public int animationTotalTime;
 	public int animationSlides;
 	public int animationPeriod;
+	public Color rankingBorderColor;
+	public Color rankingBackgroundColor;
+	public Color frameBackgroundColor;
 
 	public static class TileStyle {
 		public Color textColor;
@@ -43,14 +47,18 @@ public class Settings
 
 	// Modify here
 	private void Initiate() {
-		blockSize = new Int2(125, 125);
-		padding = new Int2(10, 10);
-		windowSize = blockSize.mul(4).add(padding.mul(2));
-		titleText = "2048 游戏";
-		animationTotalTime = 75;
-		animationSlides = 50;
-		animationPeriod = 1;
+		this.blockSize = new Int2(125, 125);
+		this.padding = new Int2(10, 10);
+		this.rankSize = new Int2(300, 0);
+		this.titleText = "2048 游戏";
+		this.animationTotalTime = 75;
+		this.animationSlides = 50;
+		this.animationPeriod = 1;
+		this.rankingBorderColor = new Color(0x000b00);
+		this.rankingBackgroundColor = new Color(0xfef4f4);
+		this.frameBackgroundColor = new Color(0xfbfaf5);
 
+		this.windowSize = this.blockSize.mul(4).add(this.padding.mul(2)).add(this.rankSize);
 		InitiatePalette();
 	}
 
