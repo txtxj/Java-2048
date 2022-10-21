@@ -29,10 +29,16 @@ public class RankManager {
 
 	public void resetGame() {
 		currentScore = 0;
+		updateScore();
 	}
 
 	public void earnScore(int score) {
 		currentScore += score;
+		updateScore();
+	}
+
+	private void updateScore() {
+		GameManager.getInstance().gameFrame.getRanking().setCurrentScore(currentScore);
 	}
 
 }

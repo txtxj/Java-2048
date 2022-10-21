@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class GameFrame extends JFrame {
 	private JPanel panel;
-	public JPanel boardPanel;
+	private JPanel boardPanel;
 	private JPanel leaderBoard;
 
 	public GameFrame(String title) {
@@ -36,7 +36,7 @@ public class GameFrame extends JFrame {
 	}
 
 	private void drawLeaderBoard() {
-		leaderBoard = new RankingPanel();
+		leaderBoard = new LeaderboardPanel();
 	}
 
 	public void createUIComponents() {
@@ -46,6 +46,10 @@ public class GameFrame extends JFrame {
 
 	public BoardPanel getBoard() {
 		return (BoardPanel) boardPanel;
+	}
+
+	public LeaderboardPanel getRanking() {
+		return (LeaderboardPanel) leaderBoard;
 	}
 
 	public void swapTiles(int a, int b) {

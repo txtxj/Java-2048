@@ -17,7 +17,7 @@ public class Tile extends JLabel {
 	}
 
 	public void setVal(int val) {
-		Settings.TileStyle style = Settings.getInstance().palette.get(val);
+		Settings.FontStyle style = Settings.getInstance().palette.get(val);
 		this.setText("%d".formatted(val));
 		this.setFont(style.textFont);
 		this.setBackground(style.backgroundColor);

@@ -35,7 +35,7 @@ public class BoardPanel extends JPanel {
 		Tile tile = getTile(index);
 		Int2 pos = calculateTilePosition(new Int2(x, y));
 		Rebounder rebounder = new Rebounder(tile, pos.x, pos.y, Settings.getInstance().animationSlides, destroy);
-		timer.schedule(rebounder, 0, Settings.getInstance().animationPeriod);
+		timer.scheduleAtFixedRate(rebounder, 0, Settings.getInstance().animationPeriod);
 	}
 
 	private void Initiate() {
