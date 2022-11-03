@@ -17,6 +17,7 @@ public class Settings
 
 	public Int2 windowSize;
 	public Int2 blockSize;
+	public Int2 blockInnerSize;
 	public Int2 padding;
 	public Int2 rankSize;
 	public String titleText;
@@ -26,6 +27,8 @@ public class Settings
 	public Color leaderboardBorderColor;
 	public Color leaderboardBackgroundColor;
 	public Color frameBackgroundColor;
+	public Color blockBorderColor;
+	public Color boardBackgroundColor;
 	public FontStyle leaderboardScoreStyle;
 
 	public static class FontStyle {
@@ -50,13 +53,14 @@ public class Settings
 	private void Initiate() {
 		// Block and windows setting
 		this.blockSize = new Int2(125, 125);
+		this.blockInnerSize = new Int2(120, 120);
 		this.padding = new Int2(10, 10);
 		this.rankSize = new Int2(300, 0);
 		this.titleText = "2048 游戏";
 
 		// Animation setting
-		this.animationTotalTime = 150;
-		this.animationSlides = 150;
+		this.animationTotalTime = 100;
+		this.animationSlides = 100;
 		this.animationPeriod = 1;
 
 		//Leaderboard setting
@@ -64,7 +68,9 @@ public class Settings
 
 		this.leaderboardBorderColor = new Color(0x000b00);
 		this.leaderboardBackgroundColor = new Color(0xfef4f4);
-		this.frameBackgroundColor = new Color(0xeeeeee);
+		this.frameBackgroundColor = new Color(0x949495);
+		this.blockBorderColor = this.frameBackgroundColor;
+		this.boardBackgroundColor = new Color(0xeeeeee);
 
 		this.windowSize = this.blockSize.mul(4).add(this.padding.mul(2)).add(this.rankSize);
 		InitiatePalette();

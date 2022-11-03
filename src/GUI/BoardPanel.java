@@ -4,6 +4,7 @@ import Gameplay.GameManager;
 import Global.Settings;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.Timer;
 
@@ -18,7 +19,7 @@ public class BoardPanel extends JPanel {
 	}
 
 	private Int2 calculateTilePosition(Int2 index) {
-		return Settings.getInstance().blockSize.mul(index.swap());
+		return Settings.getInstance().blockSize.mul(index.swap()).add(Settings.getInstance().blockSize.sub(Settings.getInstance().blockInnerSize).div(2));
 	}
 
 	private void createTileAtPosition(int num, int x, int y) {
@@ -26,7 +27,7 @@ public class BoardPanel extends JPanel {
 		Tile tile = tilePool.pop();
 		tile.setVal(num);
 		tile.setVisible(true);
-		tile.setBounds(pos.x, pos.y, Settings.getInstance().blockSize);
+		tile.setBounds(pos.x, pos.y, Settings.getInstance().blockInnerSize);
 		GameManager.getInstance().boardManager.dict[x][y] = tile.getIndex();
 		GameManager.getInstance().boardManager.val[x][y] = num;
 	}
@@ -43,7 +44,7 @@ public class BoardPanel extends JPanel {
 		this.setLayout(null);
 		this.setBounds(Settings.getInstance().padding.x, Settings.getInstance().padding.y,
 				Settings.getInstance().blockSize.x * 4, Settings.getInstance().blockSize.y * 4);
-		this.setBackground(Settings.getInstance().frameBackgroundColor);
+		this.setBackground(Settings.getInstance().boardBackgroundColor);
 		this.tilePool = new LinkedList<>();
 
 		for (int i = 0; i < 24; i++) {
@@ -54,12 +55,12 @@ public class BoardPanel extends JPanel {
 			tilePool.offer(tile);
 		}
 
-		randomCreate(2);
-		randomCreate(2);
-		randomCreate(4);
+		randomCreateTile(2);
+		randomCreateTile(2);
+		randomCreateTile(4);
 	}
 
-	public void randomCreate(int num) {
+	public void randomCreateTile(int num) {
 		if (tilePool.size() == 0) {
 			return;
 		}
@@ -104,8 +105,22 @@ public class BoardPanel extends JPanel {
 			tilePool.offer(tile);
 		}
 
-		randomCreate(2);
-		randomCreate(2);
-		randomCreate(4);
+		randomCreateTile(2);
+		randomCreateTile(2);
+		randomCreateTile(4);
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		final Int2 limit0 = Settings.getInstance().blockSize.sub(Settings.getInstance().blockInnerSize).div(2);
+		final Int2 limit1 = Settings.getInstance().blockSize.sub(limit0);
+		g.setColor(Settings.getInstance().blockBorderColor);
+		for (int i = 0; i < 4; i++) {
+			g.fillRect(i * Settings.getInstance().blockSize.x, 0, limit0.x, getHeight());
+			g.fillRect(i * Settings.getInstance().blockSize.x + limit1.x, 0, limit0.x, getHeight());
+			g.fillRect(0, i * Settings.getInstance().blockSize.y, getWidth(), limit0.y);
+			g.fillRect(0, i * Settings.getInstance().blockSize.y + limit1.y, getWidth(), limit0.y);
+		}
 	}
 }

@@ -15,6 +15,7 @@ public class GameFrame extends JFrame {
 		this.setTitle(title);
 		this.setContentPane(panel);
 		this.panel.setLayout(null);
+		this.panel.setBackground(Settings.getInstance().frameBackgroundColor);
 		this.setSize(Settings.getInstance().windowSize.getD());
 		this.setDefaultCloseOperation(GameFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
