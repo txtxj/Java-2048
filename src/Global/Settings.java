@@ -53,7 +53,7 @@ public class Settings
 	private void Initiate() {
 		// Block and windows setting
 		this.blockSize = new Int2(125, 125);
-		this.blockInnerSize = new Int2(120, 120);
+		this.blockInnerSize = new Int2(121, 121);
 		this.padding = new Int2(10, 10);
 		this.rankSize = new Int2(300, 0);
 		this.titleText = "2048 游戏";
@@ -68,7 +68,7 @@ public class Settings
 
 		this.leaderboardBorderColor = new Color(0x000b00);
 		this.leaderboardBackgroundColor = new Color(0xfef4f4);
-		this.frameBackgroundColor = new Color(0x949495);
+		this.frameBackgroundColor = new Color(0xd3cbc6);
 		this.blockBorderColor = this.frameBackgroundColor;
 		this.boardBackgroundColor = new Color(0xeeeeee);
 

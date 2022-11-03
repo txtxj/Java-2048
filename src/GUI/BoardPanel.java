@@ -111,8 +111,7 @@ public class BoardPanel extends JPanel {
 	}
 
 	@Override
-	public void paint(Graphics g) {
-		super.paint(g);
+	public void paintChildren(Graphics g) {
 		final Int2 limit0 = Settings.getInstance().blockSize.sub(Settings.getInstance().blockInnerSize).div(2);
 		final Int2 limit1 = Settings.getInstance().blockSize.sub(limit0);
 		g.setColor(Settings.getInstance().blockBorderColor);
@@ -122,5 +121,6 @@ public class BoardPanel extends JPanel {
 			g.fillRect(0, i * Settings.getInstance().blockSize.y, getWidth(), limit0.y);
 			g.fillRect(0, i * Settings.getInstance().blockSize.y + limit1.y, getWidth(), limit0.y);
 		}
+		super.paintChildren(g);
 	}
 }
