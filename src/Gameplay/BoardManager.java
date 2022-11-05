@@ -1,5 +1,7 @@
 package Gameplay;
 
+import Global.Settings;
+
 public class BoardManager {
 	public int[][] val;
 	public int[][] dict;
@@ -9,8 +11,8 @@ public class BoardManager {
 	}
 
 	private void Initiate() {
-		this.val = new int[4][4];
-		this.dict = new int[4][4];
+		this.val = new int[Settings.getInstance().mapSize.y][Settings.getInstance().mapSize.x];
+		this.dict = new int[Settings.getInstance().mapSize.y][Settings.getInstance().mapSize.x];
 		this.resetGame();
 	}
 
@@ -43,10 +45,10 @@ public class BoardManager {
 
 	public boolean moveLeft() {
 		boolean flag = false;
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < Settings.getInstance().mapSize.y; i++) {
 			int pre = -1;
 			int index = -1;
-			for (int j = 0; j < 4; j++) {
+			for (int j = 0; j < Settings.getInstance().mapSize.x; j++) {
 				if (val[i][j] == pre) {
 					merge(i, index, i, j, val[i][j]);
 					pre = -1;
@@ -63,10 +65,10 @@ public class BoardManager {
 
 	public boolean moveRight() {
 		boolean flag = false;
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < Settings.getInstance().mapSize.y; i++) {
 			int pre = -1;
-			int index = 4;
-			for (int j = 3; j >= 0; j--) {
+			int index = Settings.getInstance().mapSize.x;
+			for (int j = Settings.getInstance().mapSize.x - 1; j >= 0; j--) {
 				if (val[i][j] == pre) {
 					merge(i, index, i, j, val[i][j]);
 					pre = -1;
@@ -83,10 +85,10 @@ public class BoardManager {
 
 	public boolean moveDown() {
 		boolean flag = false;
-		for (int j = 0; j < 4; j++) {
+		for (int j = 0; j < Settings.getInstance().mapSize.x; j++) {
 			int pre = -1;
-			int index = 4;
-			for (int i = 3; i >= 0; i--) {
+			int index = Settings.getInstance().mapSize.y;
+			for (int i = Settings.getInstance().mapSize.y - 1; i >= 0; i--) {
 				if (val[i][j] == pre) {
 					merge(index, j, i, j, val[i][j]);
 					pre = -1;
@@ -103,10 +105,10 @@ public class BoardManager {
 
 	public boolean moveUp() {
 		boolean flag = false;
-		for (int j = 0; j < 4; j++) {
+		for (int j = 0; j < Settings.getInstance().mapSize.x; j++) {
 			int pre = -1;
 			int index = -1;
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < Settings.getInstance().mapSize.y; i++) {
 				if (val[i][j] == pre) {
 					merge(index, j, i, j, val[i][j]);
 					pre = -1;
@@ -122,9 +124,10 @@ public class BoardManager {
 	}
 
 	public boolean isOver() {
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
-				if (val[i][j] == 0 || (i != 3 && val[i][j] == val[i + 1][j]) || (j != 3 && val[i][j] == val[i][j + 1])) {
+		for (int i = 0; i < Settings.getInstance().mapSize.y; i++) {
+			for (int j = 0; j < Settings.getInstance().mapSize.x; j++) {
+				if (val[i][j] == 0 || (i != Settings.getInstance().mapSize.y - 1 && val[i][j] == val[i + 1][j])
+						|| (j != Settings.getInstance().mapSize.x - 1 && val[i][j] == val[i][j + 1])) {
 					return false;
 				}
 			}
@@ -134,8 +137,8 @@ public class BoardManager {
 
 	public int calculateSpace() {
 		int cnt = 0;
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
+		for (int i = 0; i < Settings.getInstance().mapSize.y; i++) {
+			for (int j = 0; j < Settings.getInstance().mapSize.x; j++) {
 				if (val[i][j] == 0) {
 					cnt += 1;
 				}
@@ -145,8 +148,8 @@ public class BoardManager {
 	}
 
 	public void resetGame() {
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
+		for (int i = 0; i < Settings.getInstance().mapSize.y; i++) {
+			for (int j = 0; j < Settings.getInstance().mapSize.x; j++) {
 				this.val[i][j] = 0;
 				this.dict[i][j] = -1;
 			}

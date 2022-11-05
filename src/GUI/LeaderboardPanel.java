@@ -15,9 +15,10 @@ public class LeaderboardPanel extends JPanel {
 
 	private void Initiate() {
 		this.setLayout(null);
-		this.setBounds(Settings.getInstance().blockSize.x * 4 + Settings.getInstance().padding.x,
+		this.setBounds(Settings.getInstance().blockSize.x * Settings.getInstance().mapSize.x + Settings.getInstance().padding.x,
 				Settings.getInstance().padding.y,
-				Settings.getInstance().rankSize.x, Settings.getInstance().blockSize.y * 4);
+				Settings.getInstance().rankSize.x,
+				Settings.getInstance().blockSize.y * Settings.getInstance().mapSize.y);
 		this.setBackground(Settings.getInstance().leaderboardBackgroundColor);
 
 		this.currentScoreLabel = new JLabel("Score: 0");

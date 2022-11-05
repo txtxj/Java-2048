@@ -19,7 +19,7 @@ public class BoardPanel extends JPanel {
 	}
 
 	private Int2 calculateTilePosition(Int2 index) {
-		return Settings.getInstance().blockSize.mul(index.swap()).add(Settings.getInstance().blockSize.sub(Settings.getInstance().blockInnerSize).div(2));
+		return Settings.getInstance().blockSize.mul(index.swap()).add(Settings.getInstance().gridRectWidth.div(2));
 	}
 
 	private void createTileAtPosition(int num, int x, int y) {
@@ -27,7 +27,7 @@ public class BoardPanel extends JPanel {
 		Tile tile = tilePool.pop();
 		tile.setVal(num);
 		tile.setVisible(true);
-		tile.setBounds(pos.x, pos.y, Settings.getInstance().blockInnerSize);
+		tile.setBounds(pos.x, pos.y, Settings.getInstance().blockSize.sub(Settings.getInstance().gridRectWidth));
 		GameManager.getInstance().boardManager.dict[x][y] = tile.getIndex();
 		GameManager.getInstance().boardManager.val[x][y] = num;
 	}
@@ -43,11 +43,14 @@ public class BoardPanel extends JPanel {
 		this.timer = new Timer();
 		this.setLayout(null);
 		this.setBounds(Settings.getInstance().padding.x, Settings.getInstance().padding.y,
-				Settings.getInstance().blockSize.x * 4, Settings.getInstance().blockSize.y * 4);
+				Settings.getInstance().blockSize.x * Settings.getInstance().mapSize.x,
+				Settings.getInstance().blockSize.y * Settings.getInstance().mapSize.y);
 		this.setBackground(Settings.getInstance().boardBackgroundColor);
 		this.tilePool = new LinkedList<>();
 
-		for (int i = 0; i < 24; i++) {
+		int tileTotalCount = (int)(Settings.getInstance().mapSize.x * Settings.getInstance().mapSize.y * 1.5f);
+
+		for (int i = 0; i < tileTotalCount; i++) {
 			Tile tile = new Tile(this, tileCounter, 2, 0, 0, Settings.getInstance().blockSize);
 			tile.setVisible(false);
 			add(tile, tileCounter);
@@ -68,8 +71,8 @@ public class BoardPanel extends JPanel {
 		if (num == 0) {
 			num = ((int)(Math.random() * 2) + 1) << 1;
 		}
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
+		for (int i = 0; i < Settings.getInstance().mapSize.y; i++) {
+			for (int j = 0; j < Settings.getInstance().mapSize.x; j++) {
 				if (GameManager.getInstance().boardManager.dict[i][j] == -1) {
 					if (index == 0) {
 						createTileAtPosition(num, i, j);
@@ -99,7 +102,8 @@ public class BoardPanel extends JPanel {
 	public void resetGame() {
 		tilePool.clear();
 
-		for (int i = 0; i < 24; i++) {
+		int tileTotalCount = (int)(Settings.getInstance().mapSize.x * Settings.getInstance().mapSize.y * 1.5f);
+		for (int i = 0; i < tileTotalCount; i++) {
 			Tile tile = getTile(i);
 			tile.setVisible(false);
 			tilePool.offer(tile);
@@ -110,17 +114,23 @@ public class BoardPanel extends JPanel {
 		randomCreateTile(4);
 	}
 
-	@Override
-	public void paintChildren(Graphics g) {
-		final Int2 limit0 = Settings.getInstance().blockSize.sub(Settings.getInstance().blockInnerSize).div(2);
+	private void paintTileGrid(Graphics g) {
+		final Int2 limit0 = Settings.getInstance().gridRectWidth.div(2);
 		final Int2 limit1 = Settings.getInstance().blockSize.sub(limit0);
 		g.setColor(Settings.getInstance().blockBorderColor);
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < Settings.getInstance().mapSize.x; i++) {
 			g.fillRect(i * Settings.getInstance().blockSize.x, 0, limit0.x, getHeight());
 			g.fillRect(i * Settings.getInstance().blockSize.x + limit1.x, 0, limit0.x, getHeight());
+		}
+		for (int i = 0; i < Settings.getInstance().mapSize.y; i++) {
 			g.fillRect(0, i * Settings.getInstance().blockSize.y, getWidth(), limit0.y);
 			g.fillRect(0, i * Settings.getInstance().blockSize.y + limit1.y, getWidth(), limit0.y);
 		}
+	}
+
+	@Override
+	public void paintChildren(Graphics g) {
+		paintTileGrid(g);
 		super.paintChildren(g);
 	}
 }

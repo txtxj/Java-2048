@@ -17,9 +17,10 @@ public class Settings
 
 	public Int2 windowSize;
 	public Int2 blockSize;
-	public Int2 blockInnerSize;
+	public Int2 gridRectWidth;
 	public Int2 padding;
 	public Int2 rankSize;
+	public Int2 mapSize;
 	public String titleText;
 	public int animationTotalTime;
 	public int animationSlides;
@@ -52,18 +53,19 @@ public class Settings
 	// Modify here
 	private void Initiate() {
 		// Block and windows setting
-		this.blockSize = new Int2(125, 125);
-		this.blockInnerSize = new Int2(121, 121);
+		this.blockSize = new Int2(96, 96);
+		this.gridRectWidth = new Int2(2, 2);
 		this.padding = new Int2(10, 10);
 		this.rankSize = new Int2(300, 0);
+		this.mapSize = new Int2(6, 8);
 		this.titleText = "2048 游戏";
 
 		// Animation setting
-		this.animationTotalTime = 100;
+		this.animationTotalTime = 160;
 		this.animationSlides = 100;
 		this.animationPeriod = 1;
 
-		//Leaderboard setting
+		// Leaderboard setting
 		this.leaderboardScoreStyle = new FontStyle(0x595857, null, 24);
 
 		this.leaderboardBorderColor = new Color(0x000b00);
@@ -72,7 +74,7 @@ public class Settings
 		this.blockBorderColor = this.frameBackgroundColor;
 		this.boardBackgroundColor = new Color(0xeeeeee);
 
-		this.windowSize = this.blockSize.mul(4).add(this.padding.mul(2)).add(this.rankSize);
+		this.windowSize = this.blockSize.mul(this.mapSize).add(this.padding.mul(2)).add(this.rankSize);
 		InitiatePalette();
 	}
 
