@@ -27,9 +27,9 @@ public class GameManager {
 		this.isAnimating = false;
 		this.isGameOver = false;
 
+		this.rankManager = new RankManager();
 		this.boardManager = new BoardManager();
 		this.gameFrame = new GameFrame("2048");
-		this.rankManager = new RankManager();
 	}
 
 	public void gameOver() {

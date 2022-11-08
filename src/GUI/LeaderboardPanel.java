@@ -1,13 +1,20 @@
 package GUI;
 
+import Gameplay.GameManager;
+import Gameplay.RankManager;
 import Global.Settings;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LeaderboardPanel extends JPanel {
 
 	private JLabel currentScoreLabel;
+
+	private List<RankManager.RankItem> rankList;
+	private List<JLabel> labelList;
 
 	public LeaderboardPanel() {
 		this.Initiate();
@@ -21,6 +28,11 @@ public class LeaderboardPanel extends JPanel {
 				Settings.getInstance().blockSize.y * Settings.getInstance().mapSize.y);
 		this.setBackground(Settings.getInstance().leaderboardBackgroundColor);
 
+		CreateCurrentScore();
+		CreateRankLabelList();
+	}
+
+	private void CreateCurrentScore() {
 		this.currentScoreLabel = new JLabel("Score: 0");
 		this.currentScoreLabel.setBounds(
 				Settings.getInstance().rankSize.x / 4,
@@ -34,6 +46,28 @@ public class LeaderboardPanel extends JPanel {
 		this.add(currentScoreLabel);
 	}
 
+	private void CreateRankLabelList() {
+		this.rankList = GameManager.getInstance().rankManager.rankList;
+		this.labelList = new ArrayList<>();
+		int rankShowNumber = Math.min(this.rankList.size(), Settings.getInstance().rankShowNumber);
+		for (int i = 0; i < rankShowNumber; i++) {
+			JLabel rankItem = new JLabel(this.rankList.get(i).toString());
+			rankItem.setFont(Settings.getInstance().leaderboardScoreStyle.textFont);
+			rankItem.setForeground(Settings.getInstance().leaderboardScoreStyle.textColor);
+			rankItem.setHorizontalAlignment(JLabel.CENTER);
+			rankItem.setBounds(
+					Settings.getInstance().rankSize.x / 8,
+					Settings.getInstance().rankSize.x / 2 + 35 * (i + 1),
+					Settings.getInstance().rankSize.x / 4 * 3,
+					Settings.getInstance().rankSize.x / 4
+			);
+			this.labelList.add(rankItem);
+		}
+		for (JLabel label : this.labelList) {
+			this.add(label);
+		}
+	}
+
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -42,10 +76,7 @@ public class LeaderboardPanel extends JPanel {
 	}
 
 	private void drawBorder(Graphics g) {
-		g.drawLine(0, 0, 0, getHeight() - 1);
-		g.drawLine(0, 0, getWidth() - 1, 0);
-		g.drawLine(getWidth() - 1, 0, getWidth() - 1, getHeight() - 1);
-		g.drawLine(0, getHeight() - 1, getWidth() - 1, getHeight() - 1);
+		g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
 	}
 
 	public void setCurrentScore(int val) {

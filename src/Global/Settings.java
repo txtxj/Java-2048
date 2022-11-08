@@ -31,6 +31,7 @@ public class Settings
 	public Color blockBorderColor;
 	public Color boardBackgroundColor;
 	public FontStyle leaderboardScoreStyle;
+	public int rankShowNumber;
 
 	public static class FontStyle {
 		public Color textColor;
@@ -53,11 +54,11 @@ public class Settings
 	// Modify here
 	private void Initiate() {
 		// Block and windows setting
-		this.blockSize = new Int2(96, 96);
+		this.blockSize = new Int2(125, 125);
 		this.gridRectWidth = new Int2(2, 2);
 		this.padding = new Int2(10, 10);
 		this.rankSize = new Int2(300, 0);
-		this.mapSize = new Int2(6, 8);
+		this.mapSize = new Int2(4, 4);
 		this.titleText = "2048 游戏";
 
 		// Animation setting
@@ -67,9 +68,10 @@ public class Settings
 
 		// Leaderboard setting
 		this.leaderboardScoreStyle = new FontStyle(0x595857, null, 24);
-
 		this.leaderboardBorderColor = new Color(0x000b00);
 		this.leaderboardBackgroundColor = new Color(0xfef4f4);
+		this.rankShowNumber = 10;
+
 		this.frameBackgroundColor = new Color(0xd3cbc6);
 		this.blockBorderColor = this.frameBackgroundColor;
 		this.boardBackgroundColor = new Color(0xeeeeee);
