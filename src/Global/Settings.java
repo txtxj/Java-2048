@@ -70,7 +70,7 @@ public class Settings
 		this.leaderboardScoreStyle = new FontStyle(0x595857, null, 24);
 		this.leaderboardBorderColor = new Color(0x000b00);
 		this.leaderboardBackgroundColor = new Color(0xfef4f4);
-		this.rankShowNumber = 10;
+		this.rankShowNumber = 5;
 
 		this.frameBackgroundColor = new Color(0xd3cbc6);
 		this.blockBorderColor = this.frameBackgroundColor;

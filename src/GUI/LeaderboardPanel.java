@@ -10,11 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LeaderboardPanel extends JPanel {
-
 	private JLabel currentScoreLabel;
 
 	private List<RankManager.RankItem> rankList;
-	private List<JLabel> labelList;
+	private List<RankLabel> labelList;
 
 	public LeaderboardPanel() {
 		this.Initiate();
@@ -30,6 +29,7 @@ public class LeaderboardPanel extends JPanel {
 
 		CreateCurrentScore();
 		CreateRankLabelList();
+//		showAllRank();
 	}
 
 	private void CreateCurrentScore() {
@@ -49,21 +49,18 @@ public class LeaderboardPanel extends JPanel {
 	private void CreateRankLabelList() {
 		this.rankList = GameManager.getInstance().rankManager.rankList;
 		this.labelList = new ArrayList<>();
-		int rankShowNumber = Math.min(this.rankList.size(), Settings.getInstance().rankShowNumber);
-		for (int i = 0; i < rankShowNumber; i++) {
-			JLabel rankItem = new JLabel(this.rankList.get(i).toString());
-			rankItem.setFont(Settings.getInstance().leaderboardScoreStyle.textFont);
-			rankItem.setForeground(Settings.getInstance().leaderboardScoreStyle.textColor);
-			rankItem.setHorizontalAlignment(JLabel.CENTER);
-			rankItem.setBounds(
+		int showNumber = Settings.getInstance().rankShowNumber;
+		for (int i = 0; i < showNumber; i++) {
+			RankLabel rankLabel = new RankLabel();
+			rankLabel.setBounds(
 					Settings.getInstance().rankSize.x / 8,
-					Settings.getInstance().rankSize.x / 2 + 35 * (i + 1),
+					Settings.getInstance().rankSize.x / 8 * (i + 5),
 					Settings.getInstance().rankSize.x / 4 * 3,
 					Settings.getInstance().rankSize.x / 4
 			);
-			this.labelList.add(rankItem);
+			this.labelList.add(rankLabel);
 		}
-		for (JLabel label : this.labelList) {
+		for (RankLabel label : this.labelList) {
 			this.add(label);
 		}
 	}
@@ -81,5 +78,12 @@ public class LeaderboardPanel extends JPanel {
 
 	public void setCurrentScore(int val) {
 		this.currentScoreLabel.setText("Score: " + val);
+	}
+
+	public void showAllRank() {
+		int showNumber = Settings.getInstance().rankShowNumber;
+		for (int i = 0; i < showNumber; i++) {
+			labelList.get(i).showItem(rankList.get(i));
+		}
 	}
 }

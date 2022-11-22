@@ -10,6 +10,7 @@ public class GameManager {
 	public GameFrame gameFrame;
 	public BoardManager boardManager;
 	public RankManager rankManager;
+	public LoginManager loginManager;
 
 	public static GameManager getInstance() {
 		if (instance == null) {
@@ -29,6 +30,7 @@ public class GameManager {
 
 		this.rankManager = new RankManager();
 		this.boardManager = new BoardManager();
+		this.loginManager = new LoginManager();
 		this.gameFrame = new GameFrame("2048");
 	}
 
