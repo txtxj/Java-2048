@@ -1,4 +1,6 @@
-package Gameplay;
+package Global;
+
+import Gameplay.GameManager;
 
 public class Game2048 {
 	public Game2048() {}
