@@ -29,6 +29,7 @@ public class LeaderboardPanel extends JPanel {
 		createCurrentScore();
 		createRankLabelList();
 		showAllRank();
+		createTip();
 	}
 
 	private void createCurrentScore() {
@@ -62,6 +63,17 @@ public class LeaderboardPanel extends JPanel {
 		for (RankLabel label : this.labelList) {
 			this.add(label);
 		}
+	}
+
+	private void createTip() {
+		JLabel label = new JLabel(Settings.getInstance().tip);
+		label.setFont(Settings.getInstance().tipStyle.textFont);
+		label.setBounds(
+				0, getHeight() - Settings.getInstance().tipStyle.textFont.getSize() - 1,
+				getWidth(), Settings.getInstance().tipStyle.textFont.getSize() - 1
+		);
+		label.setHorizontalAlignment(JLabel.RIGHT);
+		add(label);
 	}
 
 	@Override

@@ -22,6 +22,7 @@ public class Settings
 	public Int2 rankSize;
 	public Int2 mapSize;
 	public String titleText;
+	public String tip;
 	public int animationTotalTime;
 	public int animationSlides;
 	public int animationPeriod;
@@ -35,6 +36,7 @@ public class Settings
 	public FontStyle leaderboardScoreStyle;
 	public FontStyle gameOverTextStyle;
 	public FontStyle finalScoreStyle;
+	public FontStyle tipStyle;
 	public int rankShowNumber;
 
 	public static class FontStyle {
@@ -70,6 +72,7 @@ public class Settings
 		this.rankSize = new Int2(300, 0);
 		this.mapSize = new Int2(4, 4);
 		this.titleText = "2048 游戏";
+		this.tip = "Use ↑ ↓ ← → to move tiles";
 
 		// Animation setting
 		this.animationTotalTime = 160;
@@ -91,6 +94,7 @@ public class Settings
 		this.gameOverBackgroundColor = new Color(0x7f, 0x7f, 0x7f, 0x7f);
 		this.gameOverTextStyle = new FontStyle(0xebf6f7, 0x3fc8c2be, 40);
 		this.finalScoreStyle = new FontStyle(0xebf6f7, 0x3fc8c2be, 32);
+		this.tipStyle = new FontStyle(0xebf6f7, null, 12);
 
 		this.windowSize = this.blockSize.mul(this.mapSize).add(this.padding.mul(2)).add(this.rankSize);
 		initiatePalette();

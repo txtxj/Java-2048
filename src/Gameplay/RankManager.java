@@ -112,6 +112,7 @@ public class RankManager {
 						name.strip()
 				));
 			}
+			Collections.sort(rankList);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

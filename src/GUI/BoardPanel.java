@@ -9,7 +9,6 @@ import java.util.LinkedList;
 import java.util.Timer;
 
 public class BoardPanel extends JPanel {
-
 	private int tileCounter = 1;
 	private LinkedList<Tile> tilePool;
 	private Timer timer;
@@ -69,11 +68,6 @@ public class BoardPanel extends JPanel {
 		randomCreateTile(2);
 		randomCreateTile(2);
 		randomCreateTile(4);
-
-		for (int i = 0; i < 12; i++)
-		{
-			randomCreateTile(4096);
-		}
 	}
 
 	public void randomCreateTile(int num) {
