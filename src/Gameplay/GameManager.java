@@ -10,7 +10,6 @@ public class GameManager {
 	public GameFrame gameFrame;
 	public BoardManager boardManager;
 	public RankManager rankManager;
-	public LoginManager loginManager;
 
 	public static GameManager getInstance() {
 		if (instance == null) {
@@ -21,16 +20,15 @@ public class GameManager {
 
 	public GameManager() {
 		instance = this;
-		Initiate();
+		initiate();
 	}
 
-	public void Initiate() {
+	public void initiate() {
 		this.isAnimating = false;
 		this.isGameOver = false;
 
 		this.rankManager = new RankManager();
 		this.boardManager = new BoardManager();
-		this.loginManager = new LoginManager();
 		this.gameFrame = new GameFrame("2048");
 	}
 
@@ -38,6 +36,7 @@ public class GameManager {
 		isAnimating = false;
 		isGameOver = true;
 		System.out.println("Game Over!");
+		gameFrame.getBoard().showGameOver(true);
 	}
 
 	public void resetGame() {
@@ -46,5 +45,7 @@ public class GameManager {
 		rankManager.resetGame();
 		boardManager.resetGame();
 		gameFrame.getBoard().resetGame();
+		gameFrame.getRanking().showAllRank();
+		gameFrame.requestFocus();
 	}
 }

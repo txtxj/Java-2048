@@ -29,8 +29,12 @@ public class Settings
 	public Color leaderboardBackgroundColor;
 	public Color frameBackgroundColor;
 	public Color blockBorderColor;
+	public Color blockBorderColorAlpha;
 	public Color boardBackgroundColor;
+	public Color gameOverBackgroundColor;
 	public FontStyle leaderboardScoreStyle;
+	public FontStyle gameOverTextStyle;
+	public FontStyle finalScoreStyle;
 	public int rankShowNumber;
 
 	public static class FontStyle {
@@ -40,7 +44,13 @@ public class Settings
 
 		public FontStyle(Integer textColor, Integer backgroundColor, Integer size) {
 			this.textColor = new Color(textColor);
-			this.backgroundColor = backgroundColor == null ? null : new Color(backgroundColor);
+			if (backgroundColor == null) {
+				this.backgroundColor = null;
+			} else if (backgroundColor <= 0xffffff) {
+				this.backgroundColor = new Color(backgroundColor);
+			} else {
+				this.backgroundColor = new Color(backgroundColor, true);
+			}
 			this.textFont = new Font("sans", Font.BOLD, size);
 		}
 	}
@@ -48,11 +58,11 @@ public class Settings
 	public HashMap<Integer, FontStyle> palette;
 
 	public Settings() {
-		Initiate();
+		initiate();
 	}
 
 	// Modify here
-	private void Initiate() {
+	private void initiate() {
 		// Block and windows setting
 		this.blockSize = new Int2(125, 125);
 		this.gridRectWidth = new Int2(2, 2);
@@ -74,13 +84,19 @@ public class Settings
 
 		this.frameBackgroundColor = new Color(0xd3cbc6);
 		this.blockBorderColor = this.frameBackgroundColor;
+		this.blockBorderColorAlpha = new Color(0xd3, 0xcb, 0xc6, 0x7f);
 		this.boardBackgroundColor = new Color(0xeeeeee);
 
+
+		this.gameOverBackgroundColor = new Color(0x7f, 0x7f, 0x7f, 0x7f);
+		this.gameOverTextStyle = new FontStyle(0xebf6f7, 0x3fc8c2be, 40);
+		this.finalScoreStyle = new FontStyle(0xebf6f7, 0x3fc8c2be, 32);
+
 		this.windowSize = this.blockSize.mul(this.mapSize).add(this.padding.mul(2)).add(this.rankSize);
-		InitiatePalette();
+		initiatePalette();
 	}
 
-	private void InitiatePalette() {
+	private void initiatePalette() {
 		palette = new HashMap<>();
 		palette.put(2, new FontStyle(0x776e65, 0xeee4da, 54));
 		palette.put(4, new FontStyle(0x776e65, 0xede0c8, 54));

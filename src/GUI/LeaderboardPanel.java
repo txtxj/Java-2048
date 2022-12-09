@@ -11,15 +11,14 @@ import java.util.List;
 
 public class LeaderboardPanel extends JPanel {
 	private JLabel currentScoreLabel;
-
 	private List<RankManager.RankItem> rankList;
 	private List<RankLabel> labelList;
 
 	public LeaderboardPanel() {
-		this.Initiate();
+		this.initiate();
 	}
 
-	private void Initiate() {
+	private void initiate() {
 		this.setLayout(null);
 		this.setBounds(Settings.getInstance().blockSize.x * Settings.getInstance().mapSize.x + Settings.getInstance().padding.x,
 				Settings.getInstance().padding.y,
@@ -27,12 +26,12 @@ public class LeaderboardPanel extends JPanel {
 				Settings.getInstance().blockSize.y * Settings.getInstance().mapSize.y);
 		this.setBackground(Settings.getInstance().leaderboardBackgroundColor);
 
-		CreateCurrentScore();
-		CreateRankLabelList();
-//		showAllRank();
+		createCurrentScore();
+		createRankLabelList();
+		showAllRank();
 	}
 
-	private void CreateCurrentScore() {
+	private void createCurrentScore() {
 		this.currentScoreLabel = new JLabel("Score: 0");
 		this.currentScoreLabel.setBounds(
 				Settings.getInstance().rankSize.x / 4,
@@ -46,7 +45,7 @@ public class LeaderboardPanel extends JPanel {
 		this.add(currentScoreLabel);
 	}
 
-	private void CreateRankLabelList() {
+	private void createRankLabelList() {
 		this.rankList = GameManager.getInstance().rankManager.rankList;
 		this.labelList = new ArrayList<>();
 		int showNumber = Settings.getInstance().rankShowNumber;
@@ -81,7 +80,7 @@ public class LeaderboardPanel extends JPanel {
 	}
 
 	public void showAllRank() {
-		int showNumber = Settings.getInstance().rankShowNumber;
+		int showNumber = Math.min(Settings.getInstance().rankShowNumber, rankList.size());
 		for (int i = 0; i < showNumber; i++) {
 			labelList.get(i).showItem(rankList.get(i));
 		}

@@ -7,10 +7,10 @@ public class BoardManager {
 	public int[][] dict;
 
 	public BoardManager() {
-		Initiate();
+		initiate();
 	}
 
-	private void Initiate() {
+	private void initiate() {
 		this.val = new int[Settings.getInstance().mapSize.y][Settings.getInstance().mapSize.x];
 		this.dict = new int[Settings.getInstance().mapSize.y][Settings.getInstance().mapSize.x];
 		this.resetGame();
@@ -126,8 +126,8 @@ public class BoardManager {
 	public boolean isOver() {
 		for (int i = 0; i < Settings.getInstance().mapSize.y; i++) {
 			for (int j = 0; j < Settings.getInstance().mapSize.x; j++) {
-				if (val[i][j] == 0 || (i != Settings.getInstance().mapSize.y - 1 && val[i][j] == val[i + 1][j])
-						|| (j != Settings.getInstance().mapSize.x - 1 && val[i][j] == val[i][j + 1])) {
+				if (val[i][j] == 0 || (i != Settings.getInstance().mapSize.y - 1 && val[i][j] == val[i + 1][j] && val[i][j] != 4096)
+						|| (j != Settings.getInstance().mapSize.x - 1 && val[i][j] == val[i][j + 1] && val[i][j] != 4096)) {
 					return false;
 				}
 			}
@@ -154,5 +154,15 @@ public class BoardManager {
 				this.dict[i][j] = -1;
 			}
 		}
+	}
+
+	public int calBonus() {
+		int ret = 0;
+		for (int[] line : val) {
+			for (int score : line) {
+				ret += score;
+			}
+		}
+		return ret;
 	}
 }

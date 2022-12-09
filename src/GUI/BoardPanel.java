@@ -10,12 +10,14 @@ import java.util.Timer;
 
 public class BoardPanel extends JPanel {
 
-	private int tileCounter = 0;
+	private int tileCounter = 1;
 	private LinkedList<Tile> tilePool;
 	private Timer timer;
 
+	private JPanel gameOverMenu;
+
 	public BoardPanel() {
-		this.Initiate();
+		this.initiate();
 	}
 
 	private Int2 calculateTilePosition(Int2 index) {
@@ -39,13 +41,19 @@ public class BoardPanel extends JPanel {
 		timer.scheduleAtFixedRate(rebounder, 0, Settings.getInstance().animationPeriod);
 	}
 
-	private void Initiate() {
+	private void initiate() {
 		this.timer = new Timer();
 		this.setLayout(null);
 		this.setBounds(Settings.getInstance().padding.x, Settings.getInstance().padding.y,
 				Settings.getInstance().blockSize.x * Settings.getInstance().mapSize.x,
 				Settings.getInstance().blockSize.y * Settings.getInstance().mapSize.y);
 		this.setBackground(Settings.getInstance().boardBackgroundColor);
+
+		this.gameOverMenu = new GameOverMenu(0, 0,
+				Settings.getInstance().blockSize.x * Settings.getInstance().mapSize.x,
+				Settings.getInstance().blockSize.y * Settings.getInstance().mapSize.y);
+		this.add(gameOverMenu);
+
 		this.tilePool = new LinkedList<>();
 
 		int tileTotalCount = (int)(Settings.getInstance().mapSize.x * Settings.getInstance().mapSize.y * 1.5f);
@@ -61,6 +69,11 @@ public class BoardPanel extends JPanel {
 		randomCreateTile(2);
 		randomCreateTile(2);
 		randomCreateTile(4);
+
+		for (int i = 0; i < 12; i++)
+		{
+			randomCreateTile(4096);
+		}
 	}
 
 	public void randomCreateTile(int num) {
@@ -101,9 +114,10 @@ public class BoardPanel extends JPanel {
 
 	public void resetGame() {
 		tilePool.clear();
+		showGameOver(false);
 
 		int tileTotalCount = (int)(Settings.getInstance().mapSize.x * Settings.getInstance().mapSize.y * 1.5f);
-		for (int i = 0; i < tileTotalCount; i++) {
+		for (int i = 1; i <= tileTotalCount; i++) {
 			Tile tile = getTile(i);
 			tile.setVisible(false);
 			tilePool.offer(tile);
@@ -117,7 +131,7 @@ public class BoardPanel extends JPanel {
 	private void paintTileGrid(Graphics g) {
 		final Int2 limit0 = Settings.getInstance().gridRectWidth.div(2);
 		final Int2 limit1 = Settings.getInstance().blockSize.sub(limit0);
-		g.setColor(Settings.getInstance().blockBorderColor);
+		g.setColor(GameManager.getInstance().isGameOver ? Settings.getInstance().blockBorderColorAlpha : Settings.getInstance().blockBorderColor);
 		for (int i = 0; i < Settings.getInstance().mapSize.x; i++) {
 			g.fillRect(i * Settings.getInstance().blockSize.x, 0, limit0.x, getHeight());
 			g.fillRect(i * Settings.getInstance().blockSize.x + limit1.x, 0, limit0.x, getHeight());
@@ -132,5 +146,9 @@ public class BoardPanel extends JPanel {
 	public void paintChildren(Graphics g) {
 		paintTileGrid(g);
 		super.paintChildren(g);
+	}
+
+	public void showGameOver(boolean type) {
+		gameOverMenu.setVisible(type);
 	}
 }

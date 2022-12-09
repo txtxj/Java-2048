@@ -1,5 +1,6 @@
 package Gameplay;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -7,10 +8,10 @@ import java.util.List;
 public class RankManager {
 	public static class RankItem implements Comparable<RankItem> {
 		public int score;
-		public long loginTime;
+		public int loginTime;
 		public String name;
 
-		public RankItem(int score, long loginTime, String name) {
+		public RankItem(int score, int loginTime, String name) {
 			this.score = score;
 			this.loginTime = loginTime;
 			this.name = name;
@@ -19,7 +20,7 @@ public class RankManager {
 		@Override
 		public int compareTo(RankItem o) {
 			if (this.score == o.score) {
-				return (int)(this.loginTime - o.loginTime);
+				return this.loginTime - o.loginTime;
 			}
 			return o.score - this.score;
 		}
@@ -37,16 +38,11 @@ public class RankManager {
 	public RankManager() {
 		currentScore = 0;
 		rankList = new ArrayList<>();
-		// test
-		rankList.add(new RankItem(666666, 5, "txtxj"));
-		rankList.add(new RankItem(12345, 6, "cnmd"));
-		rankList.add(new RankItem(50, 9, "一库一库"));
-		rankList.add(new RankItem(41563, 1, "id4"));
-		rankList.add(new RankItem(99999, 2, "id5"));
-		Collections.sort(rankList);
+		loadRanking();
 	}
 
 	public void resetGame() {
+		saveCurrentRanking();
 		currentScore = 0;
 		updateScore();
 	}
@@ -60,4 +56,64 @@ public class RankManager {
 		GameManager.getInstance().gameFrame.getRanking().setCurrentScore(currentScore);
 	}
 
+	public void login(String name) {
+		rankList.add(new RankItem(
+				currentScore + GameManager.getInstance().boardManager.calBonus(),
+				rankList.size(),
+				name
+		));
+		Collections.sort(rankList);
+	}
+
+	private void saveCurrentRanking() {
+		String path = "." + File.separator + ".sav";
+		File file = new File(path);
+		try {
+			if (file.createNewFile()) {
+				System.out.println("Create .sav file.");
+			} else {
+				System.out.println(".sav file already exists.");
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		try (FileWriter writer = new FileWriter(file)) {
+			writer.write("" + rankList.size());
+			for (RankItem item : rankList) {
+				writer.write("\n");
+				writer.write(item.name);
+				writer.write("\n");
+				writer.write("" + item.loginTime);
+				writer.write("\n");
+				writer.write("" + item.score);
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private void loadRanking() {
+		String path = "." + File.separator + ".sav";
+		File file = new File(path);
+		if (!file.exists()) {
+			return;
+		}
+		try (FileReader fReader = new FileReader(file)) {
+			BufferedReader bRead = new BufferedReader(fReader);
+			int counter = Integer.parseInt(bRead.readLine());
+			String name, loginTime, score;
+			for (int i = 0; i < counter; i++) {
+				name = bRead.readLine();
+				loginTime = bRead.readLine();
+				score = bRead.readLine();
+				rankList.add(new RankItem(
+						Integer.parseInt(score),
+						Integer.parseInt(loginTime),
+						name.strip()
+				));
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }
