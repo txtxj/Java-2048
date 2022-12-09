@@ -2,7 +2,6 @@ package Global;
 
 import java.awt.*;
 import java.util.HashMap;
-import GUI.Int2;
 
 public class Settings
 {

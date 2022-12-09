@@ -7,7 +7,7 @@ public class GameManager {
 	public boolean isAnimating;
 	public boolean isGameOver;
 
-	public GameFrame gameFrame;
+	protected GameFrame gameFrame;
 	public BoardManager boardManager;
 	public RankManager rankManager;
 
@@ -18,12 +18,12 @@ public class GameManager {
 		return instance;
 	}
 
-	public GameManager() {
+	protected GameManager() {
 		instance = this;
 		initiate();
 	}
 
-	public void initiate() {
+	private void initiate() {
 		this.isAnimating = false;
 		this.isGameOver = false;
 
@@ -32,7 +32,7 @@ public class GameManager {
 		this.gameFrame = new GameFrame("2048");
 	}
 
-	public void gameOver() {
+	protected void gameOver() {
 		isAnimating = false;
 		isGameOver = true;
 		System.out.println("Game Over!");

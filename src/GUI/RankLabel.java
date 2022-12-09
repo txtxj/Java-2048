@@ -7,11 +7,11 @@ import javax.accessibility.Accessible;
 import javax.swing.*;
 import java.util.function.BiConsumer;
 
-public class RankLabel extends JComponent implements SwingConstants, Accessible {
+class RankLabel extends JComponent implements SwingConstants, Accessible {
 	private final JLabel idLabel;
 	private final JLabel scoreLabel;
 
-	public RankLabel() {
+	protected RankLabel() {
 		idLabel = new JLabel();
 		scoreLabel = new JLabel();
 		BiConsumer<JLabel, String> labelInit = (JLabel label, String text) -> {
@@ -25,11 +25,6 @@ public class RankLabel extends JComponent implements SwingConstants, Accessible 
 		labelInit.accept(scoreLabel, "-----");
 	}
 
-	public RankLabel(RankManager.RankItem item) {
-		this();
-		showItem(item);
-	}
-
 	@Override
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
@@ -37,7 +32,7 @@ public class RankLabel extends JComponent implements SwingConstants, Accessible 
 		this.scoreLabel.setBounds(width / 2, 0, width - width / 2, height);
 	}
 
-	public void showItem(RankManager.RankItem item) {
+	protected void showItem(RankManager.RankItem item) {
 		idLabel.setText(item.name);
 		scoreLabel.setText(String.valueOf(item.score));
 	}

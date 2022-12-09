@@ -8,10 +8,10 @@ import java.util.List;
 public class RankManager {
 	public static class RankItem implements Comparable<RankItem> {
 		public int score;
-		public int loginTime;
+		private final int loginTime;
 		public String name;
 
-		public RankItem(int score, int loginTime, String name) {
+		protected RankItem(int score, int loginTime, String name) {
 			this.score = score;
 			this.loginTime = loginTime;
 			this.name = name;
@@ -35,19 +35,19 @@ public class RankManager {
 
 	public int currentScore;
 
-	public RankManager() {
+	protected RankManager() {
 		currentScore = 0;
 		rankList = new ArrayList<>();
 		loadRanking();
 	}
 
-	public void resetGame() {
+	protected void resetGame() {
 		saveCurrentRanking();
 		currentScore = 0;
 		updateScore();
 	}
 
-	public void earnScore(int score) {
+	protected void earnScore(int score) {
 		currentScore += score;
 		updateScore();
 	}

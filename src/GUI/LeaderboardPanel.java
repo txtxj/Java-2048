@@ -14,7 +14,7 @@ public class LeaderboardPanel extends JPanel {
 	private List<RankManager.RankItem> rankList;
 	private List<RankLabel> labelList;
 
-	public LeaderboardPanel() {
+	protected LeaderboardPanel() {
 		this.initiate();
 	}
 

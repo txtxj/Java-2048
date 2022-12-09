@@ -9,7 +9,7 @@ public class GameOverMenu extends JPanel {
 	private JTextField loginTextField;
 	private JLabel currentScore;
 
-	public GameOverMenu(int x, int y, int width, int height) {
+	protected GameOverMenu(int x, int y, int width, int height) {
 		this.setLayout(null);
 		this.setBounds(x, y, width, height);
 		this.setBackground(Settings.getInstance().gameOverBackgroundColor);
@@ -75,11 +75,10 @@ public class GameOverMenu extends JPanel {
 		currentScore.setBounds(0, getHeight() / 2, getWidth(), getHeight() / 16);
 		currentScore.setFont(Settings.getInstance().finalScoreStyle.textFont);
 		currentScore.setForeground(Settings.getInstance().finalScoreStyle.textColor);
-		currentScore.setBackground(Settings.getInstance().finalScoreStyle.backgroundColor);
 		currentScore.setVerticalAlignment(JLabel.CENTER);
 		currentScore.setHorizontalAlignment(JLabel.CENTER);
 		currentScore.setVisible(true);
-		currentScore.setOpaque(true);
+		currentScore.setOpaque(false);
 		add(currentScore);
 	}
 

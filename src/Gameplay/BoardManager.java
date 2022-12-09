@@ -43,7 +43,7 @@ public class BoardManager {
 		return true;
 	}
 
-	public boolean moveLeft() {
+	protected boolean moveLeft() {
 		boolean flag = false;
 		for (int i = 0; i < Settings.getInstance().mapSize.y; i++) {
 			int pre = -1;
@@ -63,7 +63,7 @@ public class BoardManager {
 		return flag;
 	}
 
-	public boolean moveRight() {
+	protected boolean moveRight() {
 		boolean flag = false;
 		for (int i = 0; i < Settings.getInstance().mapSize.y; i++) {
 			int pre = -1;
@@ -83,7 +83,7 @@ public class BoardManager {
 		return flag;
 	}
 
-	public boolean moveDown() {
+	protected boolean moveDown() {
 		boolean flag = false;
 		for (int j = 0; j < Settings.getInstance().mapSize.x; j++) {
 			int pre = -1;
@@ -103,7 +103,7 @@ public class BoardManager {
 		return flag;
 	}
 
-	public boolean moveUp() {
+	protected boolean moveUp() {
 		boolean flag = false;
 		for (int j = 0; j < Settings.getInstance().mapSize.x; j++) {
 			int pre = -1;
@@ -123,7 +123,7 @@ public class BoardManager {
 		return flag;
 	}
 
-	public boolean isOver() {
+	protected boolean isOver() {
 		for (int i = 0; i < Settings.getInstance().mapSize.y; i++) {
 			for (int j = 0; j < Settings.getInstance().mapSize.x; j++) {
 				if (val[i][j] == 0 || (i != Settings.getInstance().mapSize.y - 1 && val[i][j] == val[i + 1][j] && val[i][j] != 4096)
@@ -147,7 +147,7 @@ public class BoardManager {
 		return cnt;
 	}
 
-	public void resetGame() {
+	protected void resetGame() {
 		for (int i = 0; i < Settings.getInstance().mapSize.y; i++) {
 			for (int j = 0; j < Settings.getInstance().mapSize.x; j++) {
 				this.val[i][j] = 0;

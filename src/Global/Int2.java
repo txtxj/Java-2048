@@ -1,4 +1,4 @@
-package GUI;
+package Global;
 
 import java.io.Serial;
 import java.util.Objects;

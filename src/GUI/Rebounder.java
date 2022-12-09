@@ -1,10 +1,11 @@
 package GUI;
 
 import Gameplay.GameManager;
+import Global.Int2;
 
 import java.util.TimerTask;
 
-public class Rebounder extends TimerTask {
+class Rebounder extends TimerTask {
 	private int counter;
 	private final Int2 origin;
 	private final Int2 target;

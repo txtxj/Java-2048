@@ -1,6 +1,7 @@
 package GUI;
 
 import Gameplay.GameManager;
+import Global.Int2;
 import Global.Settings;
 
 import javax.swing.*;
@@ -15,7 +16,7 @@ public class BoardPanel extends JPanel {
 
 	private JPanel gameOverMenu;
 
-	public BoardPanel() {
+	protected BoardPanel() {
 		this.initiate();
 	}
 
@@ -92,12 +93,12 @@ public class BoardPanel extends JPanel {
 		}
 	}
 
-	public void collect(Tile tile) {
+	protected void collect(Tile tile) {
 		tile.setVisible(false);
 		tilePool.offer(tile);
 	}
 
-	public Tile getTile(int index) {
+	protected Tile getTile(int index) {
 		return (Tile) getComponent(index);
 	}
 
